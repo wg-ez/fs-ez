@@ -14,9 +14,9 @@ services:
     container_name: fs-ez
     environment:
       - TZ=Etc/UTC
-      - PUID="1000"
-      - PGID="1000"
-      - MAX_UPLOAD="17179869184" # 16 GiB
+      - PUID=1000
+      - PGID=1000
+      - MAX_UPLOAD=17179869184 # 16 GiB
     volumes:
       - ./config:/config # SQLite database + backups
       - ./data:/data     # managed files + inbox
