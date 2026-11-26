@@ -210,6 +210,8 @@ jobs:
           chmod 777 "$config"
           mkdir -p "$data/files"
           chmod 777 "$data/files"
+          mkdir -p "$data/inbox"
+          chmod 777 "$data/inbox"
 
           for arch in amd64 arm64; do
             case "$arch" in
@@ -254,8 +256,11 @@ jobs:
             grep -q '"username":"user"' "$data/session-$arch.json"
 
             file="smoke-$arch.txt"
-            printf 'smoke %s\n' "$arch" > "$data/files/$file"
-            chmod 644 "$data/files/$file"
+            # `files/` est gere par fs-ez : un depot direct n'est jamais indexe, l'import passe par l'inbox.
+            printf 'smoke %s\n' "$arch" > "$data/inbox/$file"
+            chmod 644 "$data/inbox/$file"
+            curl -fsS -b "$jar" -X POST "http://127.0.0.1:$port/api/inbox/scan" \
+              -o "$data/scan-$arch.json"
             found=false
             for _ in $(seq 1 60); do
               curl -fsS -b "$jar" "http://127.0.0.1:$port/api/files" \
@@ -268,6 +273,7 @@ jobs:
             done
             if [ "$found" != true ]; then
               echo "fichier absent de l API files: $file ($arch)" >&2
+              cat "$data/scan-$arch.json" >&2 || true
               docker logs "$name" >&2
               exit 1
             fi
@@ -281,8 +287,6 @@ jobs:
             fi
             docker rm -f "$name" >/dev/null
             echo "arrêt $arch en ${elapsed}s"
-
-            rm -f "$data/files/$file"
           done
 
           # `config/` est en 0700/0600 pour le PUID du conteneur : lecture hote apres chmod.
