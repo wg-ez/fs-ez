@@ -177,12 +177,12 @@ impl Collection {
         self.shape(components, false).base_len
     }
 
-    /// Dossier relatif, import inbox et tag préfixé par `inbox/<date locale du jour>`.
+    /// Dossier relatif, import inbox, tag ou vue préfixé par `inbox/<date locale du jour>`.
     fn folder_after(&self, app: &App, skip_last: bool) -> Vec<String> {
         let folder = self.shape(&self.components, skip_last).relative;
         if !matches!(
             self.kind,
-            CollectionKind::Inbox | CollectionKind::TagFiles { .. }
+            CollectionKind::Inbox | CollectionKind::TagFiles { .. } | CollectionKind::View { .. }
         ) {
             return folder;
         }

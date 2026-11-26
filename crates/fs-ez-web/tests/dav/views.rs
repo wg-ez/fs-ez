@@ -52,6 +52,9 @@ async fn put_into_saved_view_imports_with_filter_tags() {
     tags.sort();
     assert_eq!(tags, ["archive".to_string(), TAG.to_string()]);
 
+    let date = inbox_date(&dav.fixture.app);
+    assert_eq!(files_of(&dav.fixture.app, date.id), vec![id]);
+
     let body = propfind_body(
         &router,
         &format!("/dav/views/{VIEW_GROUP}/combo/"),
