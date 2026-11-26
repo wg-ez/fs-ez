@@ -16,15 +16,15 @@ COPY static/css/ ./static/css/
 RUN ./node_modules/.bin/tailwindcss -i ./static/css/input.css -o ./static/css/app.css --minify
 
 # ------------------------------------------------------------ rustbase ----
-# `rust-toolchain.toml` demande le canal `stable`, absent de l'image `rust:1.99.1`.
+# `rust-toolchain.toml` demande le canal `stable`, absent de l'image `rust:1.100.0`.
 # Sans installation prealable, rustup retelecharge un toolchain (~15 s, ~150 Mo) par stage.
 # Tag fige : `rust:latest` peut changer de version et invalider tous les layers.
-FROM rust:1.99.1 AS rustbase
+FROM rust:1.100.0 AS rustbase
 RUN rustup toolchain install stable --profile minimal \
       --component rustfmt --component clippy --component llvm-tools-preview \
       --target x86_64-unknown-linux-musl --target aarch64-unknown-linux-musl && \
     rustup default stable && \
-    rustup toolchain uninstall 1.99.1
+    rustup toolchain uninstall 1.100.0
 
 # ------------------------------------------------------------- devbase ----
 # Socle glibc des portes et du serveur de dev : toolchain + sources + `app.css`

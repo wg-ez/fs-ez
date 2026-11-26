@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT" /></a>
-  <img src="https://img.shields.io/badge/rust-1.99+-orange?style=flat-square&logo=rust&logoColor=white" alt="Rust" />
+  <img src="https://img.shields.io/badge/rust-1.100+-orange?style=flat-square&logo=rust&logoColor=white" alt="Rust" />
   <a href="https://ghcr.io/fs-ez/fs-ez"><img src="https://img.shields.io/badge/docker-ghcr.io-blue?style=flat-square&logo=docker&logoColor=white" alt="Docker" /></a>
   <img src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite" />
 </p>

@@ -12,6 +12,7 @@ pub(super) struct FileMeta {
     len: u64,
     modified: SystemTime,
     dir: bool,
+    symlink: bool,
     etag: Option<String>,
 }
 
@@ -21,6 +22,7 @@ impl FileMeta {
             len: 0,
             modified: SystemTime::UNIX_EPOCH,
             dir: true,
+            symlink: false,
             etag: None,
         }
     }
@@ -30,6 +32,7 @@ impl FileMeta {
             len: record.size,
             modified: system_time(record.mtime),
             dir: false,
+            symlink: false,
             etag: Some(make_etag(
                 record.id.0,
                 record.size,
@@ -55,6 +58,7 @@ impl FileMeta {
             len,
             modified,
             dir: meta.is_dir(),
+            symlink: meta.file_type().is_symlink(),
             etag,
         }
     }
@@ -76,6 +80,10 @@ impl DavMetaData for FileMeta {
 
     fn is_dir(&self) -> bool {
         self.dir
+    }
+
+    fn is_symlink(&self) -> bool {
+        self.symlink
     }
 
     fn etag(&self) -> Option<String> {
