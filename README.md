@@ -28,9 +28,9 @@ services:
     image: ghcr.io/fs-ez/fs-ez:latest
     container_name: fs-ez
     environment:
-      TZ: Etc/UTC
-      PUID: "1000"
-      PGID: "1000"
+      - TZ=Etc/UTC
+      - PUID="1000"
+      - PGID="1000"
     volumes:
       - ./config:/config # SQLite database + backups
       - ./data:/data     # managed files + inbox
