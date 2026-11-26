@@ -1,0 +1,75 @@
+<div id="settings-tokens">
+  <h2 class="micro-label">{{ base.t("settings.api_keys") }}</h2>
+
+  {% match data.created %}
+  {% when Some with (secret) %}
+  <div class="banner banner--ok settings__secret" role="status">
+    <p class="settings__secret-title">{{ base.t("tokens.created") }}</p>
+    <div class="settings__secret-row">
+      <code class="settings__secret-value">{{ secret }}</code>
+      <button class="btn btn--ghost settings__secret-copy" type="button" data-clipboard-target=".settings__secret-value" data-clipboard-copied="{{ base.t("tokens.copied") }}">{{ base.t("tokens.copy") }}</button>
+    </div>
+    <p class="settings__secret-hint">{{ base.t("tokens.created_hint") }}</p>
+  </div>
+  {% when None %}
+  {% endmatch %}
+
+  {% match data.error %}
+  {% when Some with (message) %}
+  <p class="alert" role="alert">{{ message }}</p>
+  {% when None %}
+  {% endmatch %}
+
+  <form class="settings__token-form" method="post" action="/settings/tokens" hx-post="/settings/tokens" hx-target="#settings-tokens" hx-swap="outerHTML">
+    <label class="field">
+      <span class="field__label">{{ base.t("tokens.name") }}</span>
+      <input class="input" name="name" value="{{ data.draft_name }}" maxlength="100" required autocomplete="off" placeholder="{{ base.t("tokens.name_placeholder") }}">
+    </label>
+    <label class="field">
+      <span class="field__label">{{ base.t("tokens.expires") }}</span>
+      <input class="input" name="expires_at" value="{{ data.draft_expires }}" autocomplete="off" placeholder="31-12-2030">
+    </label>
+    <button class="btn" type="submit">{{ base.t("tokens.create") }}</button>
+  </form>
+
+  <div class="table-wrap">
+    <table class="table settings__table">
+      <thead>
+        <tr>
+          <th scope="col">{{ base.t("tokens.column.name") }}</th>
+          <th scope="col">{{ base.t("tokens.column.created") }}</th>
+          <th scope="col">{{ base.t("tokens.column.last_used") }}</th>
+          <th scope="col">{{ base.t("tokens.column.expires") }}</th>
+          <th scope="col"><span class="sr-only">{{ base.t("tokens.column.actions") }}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for token in data.rows %}
+        <tr class="table__row">
+          <td><span class="table__name-link">{{ token.name }}</span></td>
+          <td><span class="table__text">{{ token.created_at }}</span></td>
+          <td><span class="table__text">
+            {% match token.last_used_at %}
+            {% when Some with (value) %}{{ value }}
+            {% when None %}{{ base.t("tokens.never") }}
+            {% endmatch %}
+          </span></td>
+          <td><span class="table__text">
+            {% match token.expires_at %}
+            {% when Some with (value) %}{{ value }}
+            {% when None %}{{ base.t("tokens.no_expiry") }}
+            {% endmatch %}
+          </span></td>
+          <td>
+            <div class="settings__row-actions">
+              <form method="post" action="/settings/tokens/{{ token.id }}/delete" hx-post="/settings/tokens/{{ token.id }}/delete" hx-target="#settings-tokens" hx-swap="outerHTML">
+                <button class="btn btn--ghost settings__action" type="submit" data-confirm="{{ base.t("tokens.revoke_confirm") }}">{{ base.t("tokens.revoke") }}</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

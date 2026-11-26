@@ -1,0 +1,30 @@
+# Production de reference (§13.4).
+# Nom explicite : sans lui le projet prendrait "docker" (nom du dossier).
+name: fs-ez
+services:
+  fs-ez:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: runtime
+    image: ghcr.io/fs-ez/fs-ez:latest
+    container_name: fs-ez
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8678
+      # 16 Gio par defaut, surchargeable via MAX_UPLOAD sur l'hote.
+      MAX_UPLOAD: "${MAX_UPLOAD:-17179869184}"
+      RUST_LOG: info
+      # Fuseau horaire des sauvegardes et des dates affichées, ex. Europe/Paris.
+      TZ: "${TZ:-Etc/UTC}"
+      # Propriétaire des fichiers et identité finale du process, comme LinuxServer.
+      PUID: "${PUID:-1000}"
+      PGID: "${PGID:-1000}"
+    volumes:
+      - ./data:/data
+      # État (base + sauvegardes) hors du root, monté sur /config.
+      - ./config:/config
+    ports:
+      - 8678:8678
+    restart: unless-stopped
+    # Conteneur root au démarrage : /data chowné en PUID:PGID puis le serveur bascule.

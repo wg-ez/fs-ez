@@ -1,0 +1,31 @@
+<div id="files-page" data-file-drop-zone data-scope-url="{{ files.scope_url }}" data-rows-url="{{ files.rows_url }}" data-total="{{ files.total }}" data-loading="{{ files.labels.loading }}" data-drop-error="{{ files.labels.drop_error }}"{% match files.virtual_folders %}{% when Some with (folders) %} data-folder-current="{{ folders.current_id }}"{% when None %}{% endmatch %} hx-get="{{ files.refresh_url }}" hx-trigger="data-changed from:body, inbox-changed from:body{% if files.refresh_on_tag_change %}, files-changed from:body{% endif %}" hx-target="#files-page" hx-swap="outerHTML" hx-select="#files-page">
+{% include "partials/files.html" %}
+<p class="files-status sr-only" role="status" data-files-status></p>
+</div>
+<div class="dropdown__panel context-menu" id="file-context-menu" role="menu" aria-label="{{ files.labels.actions }}" data-delete-error="{{ files.labels.delete_error }}" hidden>
+{% match files.virtual_folders %}
+{% when Some with (folders) %}
+  <button class="dropdown__item" type="button" role="menuitem" data-folder-action="create">{{ folders.labels.new_folder }}</button>
+{% when None %}
+{% endmatch %}
+  <button class="dropdown__item" type="button" role="menuitem" data-file-action="rename" data-disabled-title="{{ files.labels.rename_single }}">{{ files.labels.rename }}</button>
+{% match files.virtual_folders %}
+{% when Some with (folders) %}
+  <button class="dropdown__item" type="button" role="menuitem" data-folder-action="rename" hidden>{{ folders.labels.rename }}</button>
+{% when None %}
+{% endmatch %}
+{% match files.virtual_folders %}
+{% when Some with (folders) %}
+  <button class="dropdown__item" type="button" role="menuitem" data-file-action="move" hidden>{{ folders.labels.move_label }}</button>
+{% when None %}
+{% endmatch %}
+  <button class="dropdown__item dropdown__item--danger" type="button" role="menuitem" data-file-action="delete">{{ files.labels.delete }}</button>
+{% match files.virtual_folders %}
+{% when Some with (folders) %}
+  <button class="dropdown__item dropdown__item--danger" type="button" role="menuitem" data-folder-action="delete" hidden>{{ folders.labels.delete }}</button>
+  <button class="dropdown__item" type="button" role="menuitem" data-file-action="move-here" hidden>{{ folders.labels.move_here }}</button>
+  <button class="dropdown__item" type="button" role="menuitem" data-file-action="move-cancel" hidden>{{ folders.labels.move_cancel }}</button>
+{% when None %}
+{% endmatch %}
+</div>
+<div id="toast" aria-live="polite"></div>

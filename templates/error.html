@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="{{ base.lang }}" data-theme="{{ base.theme }}" class="no-js">
+{% let head_title = base.title %}{% let head_asset_version = base.asset_version %}{% let head_scripts = false %}{% include "partials/head.html" %}
+<body>
+  <main class="empty">
+    <h1 class="empty__title">{{ base.t("error.title") }}</h1>
+    <p class="empty__text">{{ message }}</p>
+  </main>
+</body>
+</html>

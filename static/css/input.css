@@ -1,0 +1,20 @@
+/* fs-ez — source Tailwind, regeneree vers static/css/app.css par le stage css du Dockerfile. */
+
+@import "tailwindcss";
+@import "./src/theme.css";
+@import "./src/base.css";
+@import "./src/components/foundation.css";
+@import "./src/components/topbar.css";
+@import "./src/components/sidebar.css";
+@import "./src/components/view-editor.css";
+@import "./src/components/palette.css";
+@import "./src/components/work.css";
+@import "./src/components/table.css";
+@import "./src/components/tag.css";
+@import "./src/components/forms.css";
+@import "./src/components/dropdown.css";
+@import "./src/components/banner.css";
+@import "./src/components/builder.css";
+@import "./src/components/login.css";
+@import "./src/components/settings.css";
+@import "./src/components/responsive.css";

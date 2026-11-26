@@ -1,0 +1,58 @@
+{% extends "layout.html" %}{% import "partials/ui.html" as ui %}
+{% block content %}
+<div class="work__toolbar">
+  <nav class="breadcrumb" aria-label="{{ base.t("settings.breadcrumb") }}">
+    <a href="/">{{ base.t("nav.all") }}</a>
+    <span class="breadcrumb__separator" aria-hidden="true">/</span>
+    <span aria-current="page">{{ base.t("settings.title") }}</span>
+  </nav>
+</div>
+
+<h1 class="settings__page-title">{{ base.t("settings.title") }}</h1>
+<p class="settings__page-intro">{{ base.t("settings.intro") }}</p>
+
+<div class="settings">
+  <div class="settings__side">
+    <section class="settings__panel">
+      <h2 class="micro-label">{{ base.t("shell.navigation") }}</h2>
+      <form class="settings__form" method="post" action="/settings/preferences" hx-post="/settings/preferences" hx-target="#toast" hx-swap="innerHTML">
+{{ ui::select_field("recent_days", base.t("shell.recent_days"), base.recent_day_choices()) }}
+{{ ui::select_field("recent_file_days", base.t("shell.recent_file_days"), base.recent_file_day_choices()) }}
+{{ ui::select_field("page_size", base.t("shell.page_size"), base.page_size_choices()) }}
+{{ ui::select_field("sort", base.t("shell.default_sort"), base.view_sort_choices(base.default_sort)) }}
+        <button class="btn settings__save" type="submit">{{ base.t("settings.save") }}</button>
+      </form>
+    </section>
+
+    <section class="settings__panel">
+      <h2 class="micro-label">{{ base.t("settings.backup") }}</h2>
+      <form id="backup-settings" class="settings__form" method="post" action="/settings/backup" hx-post="/settings/backup" hx-target="#toast" hx-swap="innerHTML">
+{{ ui::select_field("backup_days", base.t("shell.backup_retention"), base.backup_day_choices()) }}
+{{ ui::select_field("backup_hour", base.t("shell.backup_hour"), base.backup_hour_choices()) }}
+      </form>
+      <div class="settings__button-row">
+        <form method="post" action="/settings/backup/run" hx-post="/settings/backup/run" hx-target="#toast" hx-swap="innerHTML">
+          <button class="btn btn--ghost" type="submit">{{ base.t("settings.backup_now") }}</button>
+        </form>
+        <button class="btn" type="submit" form="backup-settings" hx-post="/settings/backup" hx-target="#toast" hx-swap="innerHTML" hx-include="#backup-settings">{{ base.t("settings.save") }}</button>
+      </div>
+    </section>
+
+    <section class="settings__panel">
+      <h2 class="micro-label">{{ base.t("settings.inbox") }}</h2>
+      <p class="settings__hint">{{ base.t("settings.inbox_hint") }}</p>
+      <form method="post" action="/partials/inbox/rescan" hx-post="/partials/inbox/rescan" hx-target="#toast" hx-swap="innerHTML">
+        <button class="btn btn--ghost" type="submit">{{ base.t("inbox.rescan") }}</button>
+      </form>
+    </section>
+  </div>
+
+  <div class="settings__main">
+    <section class="settings__panel settings__panel--tokens">
+      {% include "partials/settings_tokens.html" %}
+    </section>
+  </div>
+</div>
+
+<div id="toast" aria-live="polite"></div>
+{% endblock %}

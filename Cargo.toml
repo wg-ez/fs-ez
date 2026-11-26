@@ -1,0 +1,72 @@
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.99"
+license = "MIT"
+authors = ["fs-ez"]
+
+[workspace.dependencies]
+fs-ez-core = { path = "crates/fs-ez-core" }
+fs-ez-query = { path = "crates/fs-ez-query" }
+fs-ez-store = { path = "crates/fs-ez-store" }
+fs-ez-sqlite = { path = "crates/fs-ez-sqlite" }
+fs-ez-fingerprint = { path = "crates/fs-ez-fingerprint" }
+fs-ez-fs = { path = "crates/fs-ez-fs" }
+fs-ez-app = { path = "crates/fs-ez-app" }
+fs-ez-web = { path = "crates/fs-ez-web" }
+fs-ez-cli = { path = "crates/fs-ez-cli" }
+fs-ez-test-support = { path = "crates/fs-ez-test-support" }
+
+axum = { version = "0.8", features = ["http1", "http2", "query", "form", "json", "tokio", "matched-path", "original-uri"] }
+axum-extra = { version = "0.12", features = ["cookie"] }
+futures-util = { version = "0.3", default-features = false, features = ["std"] }
+tower = { version = "0.5", default-features = false, features = ["util"] }
+tokio = { version = "1", features = ["rt", "net", "time", "signal", "sync", "fs", "io-util", "macros"] }
+askama = "0.16"
+rusqlite = { version = "0.40", features = ["bundled", "functions"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+time = { version = "0.3", features = ["std", "parsing", "formatting", "serde", "macros", "local-offset"] }
+toml = "0.9"
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", default-features = false, features = ["std", "fmt"] }
+flate2 = "1"
+blake3 = "1"
+argon2 = "0.6"
+zeroize = "1"
+rand = "0.10"
+sha2 = "0.11"
+libc = "0.2"
+nix = { version = "0.31", default-features = false, features = ["user"] }
+base64 = "0.23"
+bytes = "1"
+dav-server = { version = "0.11", default-features = false }
+xmltree = "0.12"
+percent-encoding = "2"
+form_urlencoded = "1.2"
+tempfile = "3"
+assert_cmd = "2"
+insta = { version = "1", features = ["json"] }
+
+[profile.release]
+opt-level = "s"
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = "symbols"
+incremental = false
+
+# Garde les dependances rapides : tout en opt-level 2 hors crate racine.
+[profile.release.package."*"]
+opt-level = 2
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = "warn"

@@ -1,0 +1,28 @@
+---
+source: crates/fs-ez-cli/tests/gate.rs
+expression: "normalized(&fixture, &[\"view\", \"list\"])"
+---
+{
+  "schema": 1,
+  "views": [
+    {
+      "color": "blue",
+      "created_at": "[date]",
+      "filter": {
+        "negated": false,
+        "op": "tag",
+        "tag": "rust"
+      },
+      "icon": null,
+      "id": "[id]",
+      "name": "Rust",
+      "position": 0,
+      "query": "rust",
+      "sort": {
+        "dir": "asc",
+        "field": "id"
+      },
+      "updated_at": "[date]"
+    }
+  ]
+}

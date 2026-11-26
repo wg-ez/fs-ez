@@ -1,0 +1,13 @@
+/target
+node_modules/
+/data/
+/config/
+/docker/data/
+*.db
+*.db-wal
+*.db-shm
+/files
+.env
+.env.*
+*.log
+.DS_Store

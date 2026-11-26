@@ -1,0 +1,133 @@
+---
+source: crates/fs-ez-cli/tests/gate/snapshots.rs
+expression: "normalized(&fixture, &[\"files\", \"--sort=name\"])"
+---
+{
+  "items": [
+    {
+      "file": {
+        "created_at": "[date]",
+        "dir": "[root]",
+        "fingerprint": "blake3:0743c3e598b2256258bf9101a8d16d3b6fb529e16c67a31304a6be0e569926ea",
+        "id": "[id]",
+        "kind": "file",
+        "mtime": "[date]",
+        "name": "a.txt",
+        "path": "[root]/a.txt",
+        "path_display": "[root]/a.txt",
+        "size": 3,
+        "updated_at": "[date]"
+      },
+      "tags": [
+        {
+          "created_at": "[date]",
+          "explicit": true,
+          "tag": {
+            "color": "neutral",
+            "color_custom": null,
+            "created_at": "[date]",
+            "id": "[id]",
+            "name": "alpha",
+            "name_norm": "alpha"
+          }
+        },
+        {
+          "created_at": "[date]",
+          "explicit": true,
+          "tag": {
+            "color": "neutral",
+            "color_custom": null,
+            "created_at": "[date]",
+            "id": "[id]",
+            "name": "shared",
+            "name_norm": "shared"
+          }
+        }
+      ]
+    },
+    {
+      "file": {
+        "created_at": "[date]",
+        "dir": "[root]",
+        "fingerprint": "blake3:4dbc4508126fc6e25c36cde9656855d85ad9c6df9bd6c475f9818e998b943d92",
+        "id": "[id]",
+        "kind": "file",
+        "mtime": "[date]",
+        "name": "b.txt",
+        "path": "[root]/b.txt",
+        "path_display": "[root]/b.txt",
+        "size": 4,
+        "updated_at": "[date]"
+      },
+      "tags": [
+        {
+          "created_at": "[date]",
+          "explicit": true,
+          "tag": {
+            "color": "neutral",
+            "color_custom": null,
+            "created_at": "[date]",
+            "id": "[id]",
+            "name": "beta",
+            "name_norm": "beta"
+          }
+        },
+        {
+          "created_at": "[date]",
+          "explicit": true,
+          "tag": {
+            "color": "neutral",
+            "color_custom": null,
+            "created_at": "[date]",
+            "id": "[id]",
+            "name": "shared",
+            "name_norm": "shared"
+          }
+        }
+      ]
+    },
+    {
+      "file": {
+        "created_at": "[date]",
+        "dir": "[root]",
+        "fingerprint": "blake3:912183bb6ede63f6ae9cd3d78776868621fc3c460d56e390f469522477cd691a",
+        "id": "[id]",
+        "kind": "file",
+        "mtime": "[date]",
+        "name": "c.txt",
+        "path": "[root]/c.txt",
+        "path_display": "[root]/c.txt",
+        "size": 5,
+        "updated_at": "[date]"
+      },
+      "tags": [
+        {
+          "created_at": "[date]",
+          "explicit": true,
+          "tag": {
+            "color": "neutral",
+            "color_custom": null,
+            "created_at": "[date]",
+            "id": "[id]",
+            "name": "gamma",
+            "name_norm": "gamma"
+          }
+        },
+        {
+          "created_at": "[date]",
+          "explicit": true,
+          "tag": {
+            "color": "neutral",
+            "color_custom": null,
+            "created_at": "[date]",
+            "id": "[id]",
+            "name": "shared",
+            "name_norm": "shared"
+          }
+        }
+      ]
+    }
+  ],
+  "next_offset": null,
+  "schema": 1
+}

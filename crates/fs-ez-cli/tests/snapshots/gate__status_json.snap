@@ -1,0 +1,16 @@
+---
+source: crates/fs-ez-cli/tests/gate/snapshots.rs
+expression: "normalized(&fixture, &[\"status\"])"
+---
+{
+  "db_path": "[root]/config/fs-ez.db",
+  "db_size": "[size]",
+  "files": 1,
+  "recent": 1,
+  "root": "[root]",
+  "schema": 1,
+  "tags": 1,
+  "untagged": 0,
+  "version": "0.1.0",
+  "views": 0
+}

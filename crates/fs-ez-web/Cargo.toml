@@ -1,0 +1,49 @@
+[package]
+name = "fs-ez-web"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+# Script partage a la racine : le manifeste virtuel n'en execute aucun.
+build = "../../build.rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+fs-ez-app = { workspace = true }
+fs-ez-core = { workspace = true }
+fs-ez-fs = { workspace = true }
+fs-ez-query = { workspace = true }
+fs-ez-store = { workspace = true }
+axum = { workspace = true }
+axum-extra = { workspace = true }
+futures-util = { workspace = true }
+askama = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+time = { workspace = true }
+tokio = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+percent-encoding = { workspace = true }
+form_urlencoded = { workspace = true }
+base64 = { workspace = true }
+bytes = { workspace = true }
+dav-server = { workspace = true }
+xmltree = { workspace = true }
+libc = { workspace = true }
+
+[build-dependencies]
+flate2 = { workspace = true }
+
+[dev-dependencies]
+fs-ez-test-support = { workspace = true }
+fs-ez-cli = { workspace = true }
+fs-ez-sqlite = { workspace = true }
+fs-ez-fingerprint = { workspace = true }
+fs-ez-store = { workspace = true }
+tower = { workspace = true }
+insta = { workspace = true }
+tempfile = { workspace = true }

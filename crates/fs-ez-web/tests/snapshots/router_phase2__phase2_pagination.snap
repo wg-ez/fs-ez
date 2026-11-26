@@ -1,0 +1,31 @@
+---
+source: crates/fs-ez-web/tests/router_phase2.rs
+expression: rows
+---
+
+      
+      <tr class="table__row" data-file-drop data-file-id="[id]" data-file-kind="file">
+        <td class="table__name">
+          <span class="table__name-link">page-1.txt</span>
+          <form class="table__rename" method="post" action="/partials/files/[id]/rename" hx-post="/partials/files/[id]/rename" hx-target="#toast" hx-swap="innerHTML" data-file-rename hidden>
+            <input class="input" type="text" name="name" value="page-1.txt" maxlength="255" autocomplete="off" spellcheck="false" aria-label="Rename" required>
+            <button class="sr-only" type="submit">Rename</button>
+          </form>
+        </td>
+        <td class="table__tags"><span class="table__tags-list" id="file-tags-[id]"></span></td>
+        <td><span class="table__text">1 o</span></td>
+        <td><span class="table__text">[date]</span></td>
+      </tr>
+      
+      <tr class="table__row" data-file-drop data-file-id="[id]" data-file-kind="file">
+        <td class="table__name">
+          <span class="table__name-link">page-2.txt</span>
+          <form class="table__rename" method="post" action="/partials/files/[id]/rename" hx-post="/partials/files/[id]/rename" hx-target="#toast" hx-swap="innerHTML" data-file-rename hidden>
+            <input class="input" type="text" name="name" value="page-2.txt" maxlength="255" autocomplete="off" spellcheck="false" aria-label="Rename" required>
+            <button class="sr-only" type="submit">Rename</button>
+          </form>
+        </td>
+        <td class="table__tags"><span class="table__tags-list" id="file-tags-[id]"></span></td>
+        <td><span class="table__text">1 o</span></td>
+        <td><span class="table__text">[date]</span></td>
+      </tr>

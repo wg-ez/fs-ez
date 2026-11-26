@@ -1,0 +1,212 @@
+@layer components {
+  /* -------------------------------------------------------------- table -- */
+  .table-wrap {
+    max-width: 100%;
+  }
+
+  .table {
+    width: 100%;
+  }
+
+  .table th {
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 2;
+    padding: .5rem .65rem;
+    border-bottom: 1px solid var(--line-strong);
+    background: var(--bg);
+    font-weight: 500;
+    text-align: left;
+  }
+
+  .table td {
+    padding: .45rem .65rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+  }
+
+  .sidebar__link:hover,
+  .sidebar__group > summary:hover,
+  .table__row:hover {
+    background: var(--bg-raised);
+  }
+
+  .table__row.is-active {
+    background: color-mix(in srgb, var(--app) 12%, transparent);
+  }
+
+  .table__row[data-file-id],
+  .table__row[data-folder-row] {
+    cursor: pointer;
+  }
+
+  .table__row.is-selected,
+  .table__row.is-selected:hover {
+    background: color-mix(in srgb, var(--app) 18%, transparent);
+  }
+
+  /* Firefox omet les bordures du tbody suivant un tbody sans ligne rendue : masquer tout tbody vide. */
+  tbody:not(:has(tr:not([hidden]))) {
+    display: none;
+  }
+
+  /* Lien de navigation `..` : eviter la selection du texte au clic. */
+  .table__row--up {
+    user-select: none;
+  }
+
+  .table__name-link {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Flex bloc + fit-content : la baseline d'un inline-flex decalait icone et nom hors du centre de la ligne. */
+  .table__name-link--folder {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .table__folder-icon {
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+  }
+
+  .table__rename {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+  }
+
+  .table__rename .input,
+  .table__resizer,
+  .files-spacer td {
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .table__rename .input {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    color: var(--ink);
+    font: inherit;
+    font-weight: 600;
+  }
+
+  .table__row.is-renaming {
+    background: var(--bg-raised);
+  }
+
+  .table__row.is-renaming .table__name-link {
+    display: none;
+  }
+
+  a.table__name-link:hover {
+    text-decoration: underline;
+  }
+
+  .table__name-link.table__name-link--folder:hover {
+    text-decoration: none;
+  }
+
+  .table__sort {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    color: inherit;
+  }
+
+  .table__sort:hover,
+  .table__sort:focus-visible {
+    color: var(--ink);
+    text-decoration: underline;
+  }
+
+  .table__sort.is-on {
+    color: var(--app-ink);
+  }
+
+  .table__tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .2rem;
+  }
+
+  .table__text {
+    display: block;
+    color: var(--muted);
+  }
+
+  .table.table--columns {
+    table-layout: fixed;
+  }
+
+  .table__resizer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    width: .75rem;
+    cursor: col-resize;
+    touch-action: none;
+  }
+
+  .table__resizer::after {
+    content: "";
+    position: absolute;
+    top: .3rem;
+    bottom: .3rem;
+    left: 50%;
+    width: 1px;
+    background: var(--line-strong);
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease);
+  }
+
+  .table__resizer:hover::after,
+  .table__resizer:focus-visible::after,
+  .table.is-resizing .table__resizer::after {
+    background: var(--app);
+    opacity: 1;
+  }
+
+  .table.is-resizing {
+    cursor: col-resize;
+    user-select: none;
+  }
+
+  /* ----------------------------------------------------- scroll virtuel -- */
+  /* Spacers invariants : la position document d'une ligne ne bouge pas, anchoring natif désactivé. */
+  .table.is-virtual {
+    overflow-anchor: none;
+  }
+
+  .table.is-virtual .table__row {
+    height: 2.25rem;
+  }
+
+  .table.is-virtual .table__row td {
+    padding-top: 0;
+    padding-bottom: 0;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .table.is-virtual .table__tags-list {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .files-spacer tr {
+    height: var(--files-spacer-h, 0);
+  }
+
+}

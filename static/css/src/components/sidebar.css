@@ -1,0 +1,314 @@
+@layer components {
+  /* ------------------------------------------------------------ sidebar -- */
+  .shell {
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    min-height: var(--h-body);
+  }
+
+  /* masquage desktop : grille à une colonne, le tiroir mobile reste piloté par is-rail-open */
+  @media (min-width: 48rem) {
+    .shell--sidebar-hidden {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .shell--sidebar-hidden .sidebar {
+      display: none;
+    }
+  }
+
+  .sidebar {
+    position: sticky;
+    top: var(--nav-h);
+    display: flex;
+    flex-direction: column;
+    height: var(--h-body);
+    /* géométrie unique des lignes : hauteur de ligne = taille des contrôles */
+    --sidebar-row-h: 2rem;
+    --sidebar-control-w: 1.75rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    border-right: 1px solid var(--line);
+    background: var(--bg-sunken);
+  }
+
+  /* barre masquée, le défilement reste actif */
+  .sidebar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sidebar__nav {
+    flex: 1 1 auto;
+    padding: .75rem .5rem;
+  }
+
+  .sidebar__section {
+    margin: 0 0 .75rem;
+  }
+
+  .sidebar__section:last-child {
+    margin-bottom: 0;
+  }
+
+  .sidebar__section-head {
+    justify-content: space-between;
+    gap: .5rem;
+    margin: .5rem 0 .25rem .5rem;
+  }
+
+  .sidebar__section-head .sidebar__label {
+    margin: 0;
+  }
+
+  .sidebar__label,
+  .micro-label {
+    margin: .5rem .5rem .25rem;
+  }
+
+  .sidebar__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sidebar__link,
+  .sidebar__group > summary,
+  .sidebar__group-create,
+  .sidebar__group-rename,
+  .sidebar__tag-edit,
+  .sidebar__view-rename {
+    gap: .5rem;
+    min-height: var(--sidebar-row-h);
+    padding: .3rem .5rem;
+  }
+
+  .sidebar__link,
+  .sidebar__tag-edit,
+  .sidebar__view-rename {
+    border-left: 2px solid transparent;
+  }
+
+  .sidebar__link.is-on {
+    border-left-color: var(--app);
+    background: var(--bg-raised);
+  }
+
+  /* ligne entière active ou survolée, bord gauche à la couleur du tag quand il y en a un */
+  .sidebar__row.is-on,
+  .sidebar__row:hover {
+    background: var(--bg-raised);
+  }
+
+  .sidebar__row.is-on > .sidebar__link {
+    border-left-color: var(--tag-color, var(--app));
+  }
+
+  /* Tag blacklisté depuis la sidebar : rouge et nom barré, distinct de la sélection d'inclusion. */
+  .sidebar__row.is-excluded {
+    background: var(--bg-raised);
+  }
+
+  .sidebar__row.is-excluded > .sidebar__link {
+    border-left-color: var(--danger);
+    color: var(--danger);
+  }
+
+  .sidebar__row.is-excluded .sidebar__name {
+    text-decoration: line-through;
+  }
+
+  .sidebar__name {
+    min-width: 0;
+  }
+
+  .sidebar__group-row,
+  .sidebar__row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .sidebar__group-row {
+    align-items: flex-start;
+    --sidebar-group-controls: calc(2 * var(--sidebar-control-w));
+  }
+
+  /* survol d'un en-tête de groupe : fond sur toute la ligne, jamais sur les tags dépliés */
+  .sidebar__group-row:has(.sidebar__group-head:hover),
+  .sidebar__group-row:has(> .sidebar__actions:hover) {
+    background-image: linear-gradient(var(--bg-raised), var(--bg-raised));
+    background-position: top left;
+    background-size: 100% var(--sidebar-row-h);
+    background-repeat: no-repeat;
+  }
+
+  .sidebar__group {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .sidebar__group > summary,
+  .sidebar__group-create,
+  .sidebar__group-rename {
+    min-width: 0;
+    font-weight: 500;
+  }
+
+  .sidebar__group-head .sidebar__name {
+    padding-right: 0;
+  }
+
+  .sidebar__control {
+    flex: none;
+    justify-content: center;
+    width: var(--sidebar-control-w);
+    height: var(--sidebar-row-h);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--muted);
+  }
+
+  .sidebar__control:hover,
+  .sidebar__control:focus-visible {
+    color: var(--ink);
+    background: var(--bg-raised);
+  }
+
+  /* zone d'actions collée au bord droit, contrôles jointifs et de hauteur identique */
+  .sidebar__actions {
+    display: flex;
+    flex: none;
+    align-items: flex-start;
+    align-self: flex-start;
+  }
+
+  .sidebar__action {
+    flex: none;
+  }
+
+  /* contrôles révélés au survol de leur propre ligne, jamais ceux d'un ancêtre */
+  :is(.sidebar__group-row, .sidebar__row) > .sidebar__actions > .sidebar__action {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur) ease;
+  }
+
+  :is(.sidebar__group-row:hover, .sidebar__row:hover) > .sidebar__actions > .sidebar__action,
+  :is(.sidebar__group-row, .sidebar__row) > .sidebar__actions > .sidebar__action:is(:focus-visible, :focus-within, [open]) {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .sidebar__group-row:has(.sidebar__row:hover) > .sidebar__actions > .sidebar__action:not([open]) {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (hover: none) {
+    :is(.sidebar__group-row, .sidebar__row) > .sidebar__actions > .sidebar__action {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  .sidebar__icon {
+    display: block;
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+  }
+
+  .sidebar__group.is-renaming > summary,
+  .sidebar__group.is-renaming ~ .sidebar__actions,
+  .sidebar__group.is-group-coloring > summary,
+  .sidebar__group.is-group-coloring ~ .sidebar__actions,
+  .sidebar__group.is-view-group-renaming > summary,
+  .sidebar__group.is-view-group-renaming ~ .sidebar__actions,
+  .sidebar__group.is-view-group-coloring > summary,
+  .sidebar__group.is-view-group-coloring ~ .sidebar__actions {
+    display: none;
+  }
+
+  .sidebar__group-create,
+  .sidebar__group-rename {
+    width: 100%;
+  }
+
+  .sidebar__create-field,
+  .sidebar__row--create .sidebar__tag-create {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .sidebar__create-field {
+    gap: .15rem;
+  }
+
+  :is(.sidebar__group-create, .sidebar__group-rename, .sidebar__tag-edit, .sidebar__view-rename) .input,
+  .sidebar__row--create .sidebar__name--input {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+  }
+
+  .sidebar__row--create .sidebar__name--input {
+    width: 100%;
+  }
+
+  .sidebar__row--create .sidebar__name--input::placeholder {
+    color: var(--ink);
+    opacity: 1;
+  }
+
+  .sidebar .sidebar__create-field .sidebar__error {
+    margin: 0;
+  }
+
+  .sidebar__row--create .sidebar__link {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .sidebar .sidebar__row--create .sidebar__error {
+    margin: .15rem .5rem 0;
+  }
+
+  .sidebar__group-list {
+    margin: 0 calc(-1 * var(--sidebar-group-controls)) 0 0;
+    padding: .125rem 0 .25rem .75rem;
+    list-style: none;
+  }
+
+  /* liste sans vrai tag = zéro hauteur, le placeholder seul ne décale rien */
+  .sidebar__group-list:not(:has(.sidebar__row:not(.sidebar__row--create))) {
+    padding-block: 0;
+  }
+
+  .sidebar__row > .sidebar__link,
+  .sidebar__row > .sidebar__view-rename {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .sidebar__row.is-editing > .sidebar__link,
+  .sidebar__row.is-editing > .sidebar__actions,
+  .sidebar__row.is-view-renaming > .sidebar__link,
+  .sidebar__row.is-view-renaming > .sidebar__actions,
+  .sidebar__row.is-view-coloring > .sidebar__link,
+  .sidebar__row.is-view-coloring > .sidebar__actions {
+    display: none;
+  }
+
+}

@@ -1,0 +1,260 @@
+{% macro dot(color) %}<span class="dot dot--{{ color }}" aria-hidden="true"></span>{% endmacro %}
+{% macro tag_dot(color) %}<span class="dot dot--{{ color }} sidebar__tag-color" data-tag-color aria-hidden="true"></span>{% endmacro %}
+
+{# Pastille optionnelle multi-ligne : `indent` recopiee car les snapshots comparent l'indentation. #}
+{% macro dot_opt(indent, color) -%}
+{% match color %}
+{% when Some with (color) %}
+{{ indent }}<span class="dot dot--{{ color }}" aria-hidden="true"></span>
+{% when None %}
+{% endmatch %}{{ indent }}
+{%- endmacro %}
+
+{# Pastilles de couleur partagees : soumises depuis un formulaire ou radios de l'editeur de vue. #}
+{% macro swatches(base, colors, submit = true) -%}
+{% for color in colors.iter() -%}
+{% let label = base.color_label(color.token.as_str()) -%}
+{% if submit -%}
+<button class="dot dot--{{ color.token }} sidebar__tag-swatch{% if color.selected %} is-on{% endif %}" type="submit" name="color" value="{{ color.token }}" title="{{ label }}" aria-label="{{ label }}"></button>
+{% else -%}
+<label class="dot dot--{{ color.token }} sidebar__tag-swatch{% if color.selected %} is-on{% endif %}" title="{{ label }}" aria-label="{{ label }}">
+  <input class="sr-only" type="radio" name="color" value="{{ color.token }}"{% if color.selected %} checked{% endif %}>
+</label>
+{% endif -%}
+{% endfor -%}
+{%- endmacro %}
+{% macro plus() %}<svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 3.25v9.5M3.25 8h9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"></path></svg>{% endmacro %}
+{% macro folder_plus() %}<svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 4.5h4l1.2 1.5H14v7H2zM8 8.3v3.2M6.4 9.9h3.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>{% endmacro %}
+{% macro folder() %}<svg class="table__folder-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 4.25h4.1l1.3 1.5H14v6.75H2z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>{% endmacro %}
+{% macro trash() %}<svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 4h10M6 4V2.5h4V4M4.5 4l.55 9.5h5.9L11.5 4M6.6 6.5v5M9.4 6.5v5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>{% endmacro %}
+{% macro ellipsis() %}<svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg>{% endmacro %}
+
+{# Bouton d'action `+` de la sidebar, les attributs data viennent du bloc appelant. #}
+{% macro action_plus(label) -%}
+<button class="sidebar__control sidebar__action" type="button" {{ caller() }} title="{{ label }}" aria-label="{{ label }}">{% call plus() %}{% endcall %}</button>
+{%- endmacro %}
+
+{# Menu `...` de la sidebar, `kind` produit `data-<kind>-menu`, les entrées viennent du bloc appelant. #}
+{% macro action_menu(kind, label) -%}
+<details class="dropdown sidebar__action" data-{{ kind }}-menu>
+  <summary class="sidebar__control" title="{{ label }}" aria-label="{{ label }}" aria-haspopup="menu">{% call ellipsis() %}{% endcall %}</summary>
+  <ul class="dropdown__panel" role="menu">
+{{ caller() }}  </ul>
+</details>
+{%- endmacro %}
+
+{# Menu de tags groupe par groupe, partage par la recherche et le builder de vues. #}
+{% macro tag_menu(base, groups, name = "", options = false, exclude_name = "") -%}
+{% for group in groups %}
+{% if !group.tags.is_empty() %}
+<p class="dropdown__group">
+  {{ dot_opt("  ", group.color) }}
+  {{ group.name }}
+</p>
+<ul>
+  {% for tag in group.tags %}
+  <li>
+    <label class="dropdown__item{% if !exclude_name.is_empty() %}{% if base.is_search_excluded(tag.name) %} dropdown__item--excluded{% endif %}{% endif %}"{% if !exclude_name.is_empty() %} title="{{ base.t("shell.search_exclude_hint") }}"{% endif %}>
+      <input class="sr-only" type="checkbox"{% if !name.is_empty() %} name="{{ name }}"{% endif %} value="{{ tag.name }}"{% if options %} data-tag-option data-color="{{ tag.color }}"{% endif %}{% if !exclude_name.is_empty() %}{% if base.is_search_excluded(tag.name) %} data-excluded{% endif %}{% endif %}{% if base.is_search_tag(tag.name) %}{% if exclude_name.is_empty() || !base.is_search_excluded(tag.name) %} checked{% endif %}{% endif %}>{% if !exclude_name.is_empty() %}
+      <input type="hidden" name="{{ exclude_name }}" value="{{ tag.name }}" data-not-tag{% if !base.is_search_excluded(tag.name) %} disabled{% endif %}>{% endif %}
+      {% call tag_dot(tag.color) %}{% endcall %}
+      <span class="dropdown__label">{{ tag.name }}</span>
+    </label>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endfor %}
+{%- endmacro %}
+
+{# Constructeur de filtres des vues sauvegardees. #}
+{% macro filter_builder(base, input_id, groups, value) -%}
+<input type="hidden" name="filter_json" id="{{ input_id }}" value="{{ value }}">
+<div class="builder" data-builder data-filter-input="#{{ input_id }}" data-remove-label="{{ base.t("views.builder.remove") }}">
+  <div class="builder__group builder__group--root" data-op="and">
+    <div class="builder__items"></div>
+    <p class="builder__empty">{{ base.t("views.builder.empty") }}</p>
+    <div class="builder__footer">
+      <button type="button" class="builder__add" data-add-condition>{% call plus() %}{% endcall %}{{ base.t("views.builder.add_condition") }}</button>
+      <button type="button" class="builder__add" data-add-group>{% call folder_plus() %}{% endcall %}{{ base.t("views.builder.add_group") }}</button>
+    </div>
+  </div>
+  <template class="builder-condition-template">
+    <div class="builder__condition">
+      <select class="builder__logic input" data-dropdown aria-label="{{ base.t("views.builder.where") }}">
+        <option value="where">{{ base.t("views.builder.where") }}</option>
+        <option value="and">{{ base.t("views.builder.and") }}</option>
+        <option value="or">{{ base.t("views.builder.or") }}</option>
+      </select>
+      <select class="builder__cmp input" data-dropdown aria-label="{{ base.t("views.builder.cmp") }}">
+        <optgroup label="{{ base.t("views.builder.tag") }}">
+          <option value="has">{{ base.t("views.builder.has") }}</option>
+          <option value="has_not">{{ base.t("views.builder.has_not") }}</option>
+        </optgroup>
+        <optgroup label="{{ base.t("views.builder.tagset") }}">
+          <option value="only">{{ base.t("views.builder.only") }}</option>
+          <option value="not_only">{{ base.t("views.builder.not_only") }}</option>
+        </optgroup>
+      </select>
+      {% let remove_condition_label = base.t("views.builder.remove") %}<button type="button" class="builder__icon builder__icon--danger" data-remove-condition title="{{ remove_condition_label }}" aria-label="{{ remove_condition_label }}">{% call trash() %}{% endcall %}</button>
+      <details class="dropdown builder__tagset">
+        <summary class="builder__tagset-summary dropdown__trigger">
+          <span class="builder__tagset-chips" role="group" aria-label="{{ base.t("views.builder.tagset") }}"></span>
+          <span class="builder__tagset-trigger-label">{{ base.t("views.builder.add_tag") }}</span>
+        </summary>
+        <div class="dropdown__panel dropdown__panel--field builder__tagset-panel">
+{{ tag_menu(base, groups, options = true) }}
+        </div>
+      </details>
+    </div>
+  </template>
+  <template class="builder-group-template">
+    <div class="builder__group builder__group--nested" data-op="and">
+      <div class="builder__group-head">
+        <select class="builder__group-op input" data-dropdown aria-label="{{ base.t("views.builder.group") }}">
+          <option value="and">{{ base.t("views.builder.and") }}</option>
+          <option value="or">{{ base.t("views.builder.or") }}</option>
+        </select>
+        <div class="builder__group-tools">
+          {% let add_condition_label = base.t("views.builder.add_condition") %}<button type="button" class="builder__icon" data-add-condition title="{{ add_condition_label }}" aria-label="{{ add_condition_label }}">{% call plus() %}{% endcall %}</button>
+          {% let add_group_label = base.t("views.builder.add_group") %}<button type="button" class="builder__icon" data-add-group title="{{ add_group_label }}" aria-label="{{ add_group_label }}">{% call folder_plus() %}{% endcall %}</button>
+          {% let remove_group_label = base.t("views.builder.remove") %}<button type="button" class="builder__icon builder__icon--danger" data-remove-group title="{{ remove_group_label }}" aria-label="{{ remove_group_label }}">{% call trash() %}{% endcall %}</button>
+        </div>
+      </div>
+      <div class="builder__items"></div>
+    </div>
+  </template>
+</div>
+{%- endmacro %}
+
+{# Editeur de vue dans la sidebar : creation (`create = true`) ou modification, `key` suffixe les ids, `open` ou `error` affiche le formulaire. #}
+{% macro view_editor(base, action, key, name, sort, filter_json, groups, colors, error = "", create = false, open = false, group = "") -%}
+<form class="sidebar__view-editor" method="post" action="{{ action }}" hx-post="{{ action }}" hx-target="#sidebar" hx-swap="none" data-view-editor data-view-id="{{ key }}"{% if create %} data-view-create-form{% endif %}{% if !open && error.is_empty() %} hidden{% endif %}>
+  <input type="hidden" name="group" value="{{ group }}" data-view-group-input>
+  {% if create %}<div class="sidebar__view-editor__head">
+    <label class="sr-only" for="view-name-{{ key }}">{{ base.t("views.name") }}</label>
+    <input class="input" id="view-name-{{ key }}" name="name" value="{{ name }}" maxlength="100" autocomplete="off" placeholder="{{ base.t("views.name") }}" required>
+    {% let cancel_label = base.t("views.cancel") %}<button class="sidebar__control" type="button" data-view-editor-close title="{{ cancel_label }}" aria-label="{{ cancel_label }}"><span aria-hidden="true">&times;</span></button>
+  </div>
+  {% endif %}<div class="sidebar__view-editor__row">
+    <label class="sr-only" for="view-sort-{{ key }}">{{ base.t("views.sort") }}</label>
+    <select class="input" id="view-sort-{{ key }}" name="sort" data-dropdown>
+      {% for option in base.view_sort_choices(sort) %}<option value="{{ option.token }}"{% if option.selected %} selected{% endif %}>{{ option.label }}</option>{% endfor %}
+    </select>
+  </div>
+  <div class="sidebar__view-editor__section">
+    <span class="micro-label">{{ base.t("views.color") }}</span>
+  </div>
+  <div class="sidebar__view-editor__colors" role="radiogroup" aria-label="{{ base.t("views.color") }}">
+    {% call swatches(base, colors, submit = false) %}{% endcall %}
+  </div>
+  <div class="sidebar__view-editor__section">
+    <span class="micro-label">{{ base.t("views.builder.filters") }}</span>
+  </div>
+  {{ filter_builder(base, "view-filter-" ~ key, groups, filter_json) }}
+  {% if !error.is_empty() %}<p class="alert sidebar__error" role="alert">{{ error }}</p>{% endif %}
+  <div class="sidebar__view-editor__actions">
+    <button class="btn btn--ghost" type="button" data-view-editor-close>{{ base.t("views.cancel") }}</button>
+    <button class="btn" type="submit">{{ base.t("views.save") }}</button>
+  </div>
+</form>
+{%- endmacro %}
+
+{# Fil d'Ariane simple : accueil + separateur + page courante. #}
+{% macro breadcrumb(current, aria, home) -%}
+<div class="work__toolbar">
+  <nav class="breadcrumb" aria-label="{{ aria }}">
+    <a href="/">{{ home }}</a>
+    <span class="breadcrumb__separator" aria-hidden="true">/</span>
+    <span aria-current="page">{{ current }}</span>
+  </nav>
+</div>
+{%- endmacro %}
+
+{# Lien de nav sidebar : `active_key` compare a `current`. #}
+{% macro nav_link(active_key, current, href, label) %}        <li>
+          <a class="sidebar__link{% if active_key == current %} is-on{% endif %}" href="{{ href }}" title="{{ label }}" aria-label="{{ label }}">
+            <span class="sidebar__name">{{ label }}</span>
+          </a>
+        </li>
+{%- endmacro %}
+
+{# Entree de menu suppression groupe/tag : `indent` recopiee car les snapshots comparent l'indentation. #}
+{% macro dropdown_delete(resource, id, confirm, label, indent) -%}
+{{ indent }}<li role="none">
+{{ indent }}  {% let url = resource ~ "/" ~ id ~ "/delete" %}<form method="post" action="{{ url }}" hx-post="{{ url }}" hx-target="#sidebar" hx-swap="none">
+{{ indent }}    <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="{{ confirm }}">{{ label }}</button>
+{{ indent }}  </form>
+{{ indent }}</li>
+{%- endmacro %}
+
+{# Formulaire couleur partage sidebar : `indent` recopiee car les snapshots comparent l'indentation. #}
+{% macro color_edit_form(base, indent, classes, action, kind, colors) -%}
+{{ indent }}<form class="{{ classes }}" method="post" action="{{ action }}" hx-post="{{ action }}" hx-target="#sidebar" hx-swap="none" data-{{ kind }}-edit="color" hidden>
+{{ indent }}  <span class="sr-only">{{ base.t("tags.column.color") }}</span>
+{{ indent }}  {% call swatches(base, colors) %}{% endcall %}
+{{ indent }}</form>
+{%- endmacro %}
+
+{# Champ select des preferences : `options` expose token/selected/label. #}
+{% macro select_field(name, label, options) %}        <label class="field">
+          <span class="field__label">{{ label }}</span>
+          <select class="input" name="{{ name }}" data-dropdown>
+            {% for option in options %}<option value="{{ option.token }}"{% if option.selected %} selected{% endif %}>{{ option.label }}</option>
+            {% endfor %}
+          </select>
+        </label>
+{%- endmacro %}
+
+{# Formulaire de creation de groupe : `kind` = view-group ou group. #}
+{% macro group_create_form(base, kind, resource, color, draft, message, placeholder) %}      <form class="sidebar__group-create" method="post" action="{{ resource }}" hx-post="{{ resource }}" hx-target="#sidebar" hx-swap="none" data-{{ kind }}-create-form{% if message.is_none() %} hidden{% endif %}>
+        <label class="sr-only" for="sidebar-new-{{ kind }}">{{ base.t("tags.column.name") }}</label>
+        <input type="hidden" name="color" value="{{ color }}">
+        {% call tag_dot(color) %}{% endcall %}
+        <span class="sidebar__create-field">
+          <input class="input" id="sidebar-new-{{ kind }}" name="name" value="{{ draft }}" maxlength="64" autocomplete="off" placeholder="{{ placeholder }}" required>
+          {% match message %}
+          {% when Some with (text) %}
+          <p class="alert sidebar__error" role="alert">{{ text }}</p>
+          {% when None %}
+          {% endmatch %}
+        </span>
+      </form>
+{%- endmacro %}
+
+{# Ligne de groupe sidebar partagee vues/tags, le contenu de la liste vient du bloc appelant. #}
+{% macro group_row(kind, resource, group, base, plus_label, menu_label, delete_confirm) -%}
+<div class="sidebar__group-row" data-{{ kind }}-row="{{ group.id }}" data-{{ kind }}-drag="{{ group.id }}">
+        <details class="sidebar__group"{% if !group.collapsed %} open{% endif %}>
+          <summary class="sidebar__group-head drop-target" data-{{ kind }}="{{ group.id }}" draggable="true" title="{{ group.name }}" aria-label="{{ group.name }}">
+            {{ dot_opt("            ", group.color) }}
+            <span class="sidebar__name">{{ group.name }}</span>
+          </summary>
+          <form class="sidebar__group-rename" method="post" action="{{ resource }}/{{ group.id }}/rename" hx-post="{{ resource }}/{{ group.id }}/rename" hx-target="#sidebar" hx-swap="none" data-{{ kind }}-rename hidden>
+            <label class="sr-only" for="sidebar-{{ kind }}-name-{{ group.id }}">{{ base.t("tags.column.name") }}</label>{% match group.color %}{% when Some with (color) %}{% call dot(color) %}{% endcall %}{% when None %}{% endmatch %}
+            <input class="input" id="sidebar-{{ kind }}-name-{{ group.id }}" name="name" value="{{ group.name }}" maxlength="64" required autocomplete="off">
+          </form>
+{{ color_edit_form(base, "          ", "sidebar__group-rename sidebar__tag-edit--colors", resource ~ "/" ~ group.id ~ "/color", kind, group.colors()) }}
+          <ul class="sidebar__group-list" data-{{ kind }}-list="{{ group.id }}">{{ caller() }}          </ul>
+        </details>
+        <div class="sidebar__actions">
+          {% call action_plus(plus_label) %}{% if kind == "view-group" %}data-view-create-open data-view-group="{{ group.id }}"{% else %}data-group-tag-open="{{ group.id }}"{% endif %}{% endcall %}
+          {% call action_menu(kind, menu_label) %}
+              <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-{{ kind }}-edit-open="name">{{ base.t("tags.rename") }}</button></li>
+              <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-{{ kind }}-edit-open="color">{{ base.t("tags.change_color") }}</button></li>
+{{ dropdown_delete(resource, group.id, delete_confirm, base.t("tags.delete"), "              ") }}
+          {% endcall %}
+        </div>
+      </div>
+{%- endmacro %}
+
+{# Ancre dossier : attributs htmx partages, le contenu vient du bloc appelant. #}
+{% macro folder_link(url, aria = "") -%}
+<a class="table__name-link table__name-link--folder" href="{{ url }}" data-folder-nav hx-get="{{ url }}" hx-target="#files-page" hx-swap="outerHTML" hx-select="#files-page" hx-push-url="true"{% if !aria.is_empty() %} aria-label="{{ aria }}"{% endif %}>{{ caller() }}</a>
+{%- endmacro %}
+
+{# Cellules vides d'une ligne dossier. #}
+{% macro folder_empty_cells() %}        <td class="table__tags"></td>
+        <td><span class="table__text"></span></td>
+        <td><span class="table__text"></span></td>
+{%- endmacro %}

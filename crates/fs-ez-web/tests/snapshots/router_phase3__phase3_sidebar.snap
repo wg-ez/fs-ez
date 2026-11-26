@@ -1,0 +1,1648 @@
+---
+source: crates/fs-ez-web/tests/router_phase3.rs
+expression: sidebar
+---
+<aside class="sidebar" id="sidebar" aria-label="Navigation" hx-get="/partials/sidebar" hx-trigger="data-changed from:body, inbox-changed from:body, tags-changed from:body, groups-changed from:body, views-changed from:body" hx-swap="outerHTML">
+  
+
+  <div class="sidebar__nav">
+    <section class="sidebar__section">
+      <ul class="sidebar__list">
+        <li>
+          <a class="sidebar__link" href="/" title="All files" aria-label="All files">
+            <span class="sidebar__name">All files</span>
+          </a>
+        </li>
+        <li>
+          <a class="sidebar__link" href="/?filter=untagged" title="Untagged" aria-label="Untagged">
+            <span class="sidebar__name">Untagged</span>
+          </a>
+        </li>
+        <li>
+          <a class="sidebar__link" href="/?filter=recent" title="Recently tagged" aria-label="Recently tagged">
+            <span class="sidebar__name">Recently tagged</span>
+          </a>
+        </li>
+        <li>
+          <a class="sidebar__link" href="/?filter=recent-files" title="Recent files" aria-label="Recent files">
+            <span class="sidebar__name">Recent files</span>
+          </a>
+        </li>
+        <li>
+          <a class="sidebar__link" href="/virtual-folders" title="Virtual folders" aria-label="Virtual folders">
+            <span class="sidebar__name">Virtual folders</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="sidebar__section">
+      <div class="sidebar__section-head">
+        <p class="sidebar__label">Views</p>
+        <button class="sidebar__control sidebar__action" type="button" data-view-group-create-open title="Create view group" aria-label="Create view group"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 3.25v9.5M3.25 8h9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"></path></svg></button>
+      </div>
+      <form class="sidebar__group-create" method="post" action="/partials/view-groups" hx-post="/partials/view-groups" hx-target="#sidebar" hx-swap="none" data-view-group-create-form hidden>
+        <label class="sr-only" for="sidebar-new-view-group">Name</label>
+        <input type="hidden" name="color" value="[color]">
+        <span class="dot dot--[color] sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+        <span class="sidebar__create-field">
+          <input class="input" id="sidebar-new-view-group" name="name" value="" maxlength="64" autocomplete="off" placeholder="New view group" required>
+          
+          
+        </span>
+      </form>
+      <div class="sidebar__view-create-panel" data-view-create-panel>
+<form class="sidebar__view-editor" method="post" action="/views" hx-post="/views" hx-target="#sidebar" hx-swap="none" data-view-editor data-view-id="create" data-view-create-form hidden>
+  <input type="hidden" name="group" value="" data-view-group-input>
+  <div class="sidebar__view-editor__head">
+    <label class="sr-only" for="view-name-create">Name</label>
+    <input class="input" id="view-name-create" name="name" value="" maxlength="100" autocomplete="off" placeholder="Name" required>
+    <button class="sidebar__control" type="button" data-view-editor-close title="Cancel" aria-label="Cancel"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="sidebar__view-editor__row">
+    <label class="sr-only" for="view-sort-create">Sort</label>
+    <select class="input" id="view-sort-create" name="sort" data-dropdown>
+      <option value="id:asc">Id (ascending)</option><option value="id:desc">Id (descending)</option><option value="name:asc">Name (ascending)</option><option value="name:desc">Name (descending)</option><option value="size:asc">Size (ascending)</option><option value="size:desc">Size (descending)</option><option value="mtime:asc">Date (ascending)</option><option value="mtime:desc">Date (descending)</option>
+    </select>
+  </div>
+  <div class="sidebar__view-editor__section">
+    <span class="micro-label">Color</span>
+  </div>
+  <div class="sidebar__view-editor__colors" role="radiogroup" aria-label="Color">
+    <label class="dot dot--[color] sidebar__tag-swatch" title="Neutral" aria-label="Neutral">
+  <input class="sr-only" type="radio" name="color" value="[color]">
+</label>
+<label class="dot dot--[color] sidebar__tag-swatch" title="Red" aria-label="Red">
+  <input class="sr-only" type="radio" name="color" value="[color]">
+</label>
+<label class="dot dot--[color] sidebar__tag-swatch" title="Orange" aria-label="Orange">
+  <input class="sr-only" type="radio" name="color" value="[color]">
+</label>
+<label class="dot dot--[color] sidebar__tag-swatch" title="Amber" aria-label="Amber">
+  <input class="sr-only" type="radio" name="color" value="[color]">
+</label>
+<label class="dot dot--[color] sidebar__tag-swatch" title="Green" aria-label="Green">
+  <input class="sr-only" type="radio" name="color" value="[color]">
+</label>
+<label class="dot dot--[color] sidebar__tag-swatch" title="Teal" aria-label="Teal">
+  <input class="sr-only" type="radio" name="color" value="[color]">
+</label>
+<label class="dot dot--[color] sidebar__tag-swatch" title="Cyan" aria-label="Cyan">
+  <input class="sr-only" type="radio" name="color" value="[color]">
+</label>
+<label class="dot dot--[color] sidebar__tag-swatch" title="Blue" aria-label="Blue">
+  <input class="sr-only" type="radio" name="color" value="[color]">
+</label>
+<label class="dot dot--[color] sidebar__tag-swatch" title="Indigo" aria-label="Indigo">
+  <input class="sr-only" type="radio" name="color" value="[color]">
+</label>
+<label class="dot dot--[color] sidebar__tag-swatch" title="Violet" aria-label="Violet">
+  <input class="sr-only" type="radio" name="color" value="[color]">
+</label>
+<label class="dot dot--[color] sidebar__tag-swatch" title="Pink" aria-label="Pink">
+  <input class="sr-only" type="radio" name="color" value="[color]">
+</label>
+<label class="dot dot--[color] sidebar__tag-swatch" title="Brown" aria-label="Brown">
+  <input class="sr-only" type="radio" name="color" value="[color]">
+</label>
+
+  </div>
+  <div class="sidebar__view-editor__section">
+    <span class="micro-label">Filters</span>
+  </div>
+  <input type="hidden" name="filter_json" id="view-filter-create" value="">
+<div class="builder" data-builder data-filter-input="#view-filter-create" data-remove-label="Remove">
+  <div class="builder__group builder__group--root" data-op="and">
+    <div class="builder__items"></div>
+    <p class="builder__empty">No filter, every file is listed.</p>
+    <div class="builder__footer">
+      <button type="button" class="builder__add" data-add-condition><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 3.25v9.5M3.25 8h9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"></path></svg>Add filter</button>
+      <button type="button" class="builder__add" data-add-group><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 4.5h4l1.2 1.5H14v7H2zM8 8.3v3.2M6.4 9.9h3.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>Add filter group</button>
+    </div>
+  </div>
+  <template class="builder-condition-template">
+    <div class="builder__condition">
+      <select class="builder__logic input" data-dropdown aria-label="Where">
+        <option value="where">Where</option>
+        <option value="and">And</option>
+        <option value="or">Or</option>
+      </select>
+      <select class="builder__cmp input" data-dropdown aria-label="Operator">
+        <optgroup label="Tag">
+          <option value="has">contains the tags</option>
+          <option value="has_not">does not contain the tags</option>
+        </optgroup>
+        <optgroup label="Exact tag set">
+          <option value="only">contains only the tags</option>
+          <option value="not_only">does not contain only the tags</option>
+        </optgroup>
+      </select>
+      <button type="button" class="builder__icon builder__icon--danger" data-remove-condition title="Remove" aria-label="Remove"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 4h10M6 4V2.5h4V4M4.5 4l.55 9.5h5.9L11.5 4M6.6 6.5v5M9.4 6.5v5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <details class="dropdown builder__tagset">
+        <summary class="builder__tagset-summary dropdown__trigger">
+          <span class="builder__tagset-chips" role="group" aria-label="Exact tag set"></span>
+          <span class="builder__tagset-trigger-label">Add tag</span>
+        </summary>
+        <div class="dropdown__panel dropdown__panel--field builder__tagset-panel">
+
+
+<p class="dropdown__group">
+  
+  
+  Divers
+</p>
+<ul>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="c-red" data-tag-option data-color="red">
+      <span class="dot dot--red sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">c-red</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="c-teal" data-tag-option data-color="teal">
+      <span class="dot dot--teal sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">c-teal</span>
+    </label>
+  </li>
+  
+</ul>
+
+
+
+<p class="dropdown__group">
+  
+  <span class="dot dot--indigo" aria-hidden="true"></span>
+  
+  Projets
+</p>
+<ul>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="c-indigo" data-tag-option data-color="indigo">
+      <span class="dot dot--indigo sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">c-indigo</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="c-violet" data-tag-option data-color="violet">
+      <span class="dot dot--violet sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">c-violet</span>
+    </label>
+  </li>
+  
+</ul>
+
+
+
+<p class="dropdown__group">
+  
+  <span class="dot dot--amber" aria-hidden="true"></span>
+  
+  Finance
+</p>
+<ul>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="c-blue" data-tag-option data-color="blue">
+      <span class="dot dot--blue sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">c-blue</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="c-green" data-tag-option data-color="green">
+      <span class="dot dot--green sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">c-green</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="c-amber" data-tag-option data-color="amber">
+      <span class="dot dot--amber sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">c-amber</span>
+    </label>
+  </li>
+  
+</ul>
+
+
+
+<p class="dropdown__group">
+  
+  
+  Tests
+</p>
+<ul>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="c-neutral" data-tag-option data-color="neutral">
+      <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">c-neutral</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="c-orange" data-tag-option data-color="orange">
+      <span class="dot dot--orange sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">c-orange</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="c-cyan" data-tag-option data-color="cyan">
+      <span class="dot dot--cyan sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">c-cyan</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="c-pink" data-tag-option data-color="pink">
+      <span class="dot dot--pink sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">c-pink</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="c-brown" data-tag-option data-color="brown">
+      <span class="dot dot--brown sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">c-brown</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="facture" data-tag-option data-color="neutral">
+      <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">facture</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="projet-alpha" data-tag-option data-color="neutral">
+      <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">projet-alpha</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="paye" data-tag-option data-color="neutral">
+      <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">paye</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="projet-beta" data-tag-option data-color="neutral">
+      <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">projet-beta</span>
+    </label>
+  </li>
+  
+  <li>
+    <label class="dropdown__item">
+      <input class="sr-only" type="checkbox" value="archive" data-tag-option data-color="neutral">
+      <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <span class="dropdown__label">archive</span>
+    </label>
+  </li>
+  
+</ul>
+
+
+        </div>
+      </details>
+    </div>
+  </template>
+  <template class="builder-group-template">
+    <div class="builder__group builder__group--nested" data-op="and">
+      <div class="builder__group-head">
+        <select class="builder__group-op input" data-dropdown aria-label="Group">
+          <option value="and">And</option>
+          <option value="or">Or</option>
+        </select>
+        <div class="builder__group-tools">
+          <button type="button" class="builder__icon" data-add-condition title="Add filter" aria-label="Add filter"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 3.25v9.5M3.25 8h9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"></path></svg></button>
+          <button type="button" class="builder__icon" data-add-group title="Add filter group" aria-label="Add filter group"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 4.5h4l1.2 1.5H14v7H2zM8 8.3v3.2M6.4 9.9h3.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+          <button type="button" class="builder__icon builder__icon--danger" data-remove-group title="Remove" aria-label="Remove"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 4h10M6 4V2.5h4V4M4.5 4l.55 9.5h5.9L11.5 4M6.6 6.5v5M9.4 6.5v5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        </div>
+      </div>
+      <div class="builder__items"></div>
+    </div>
+  </template>
+</div>
+  
+  <div class="sidebar__view-editor__actions">
+    <button class="btn btn--ghost" type="button" data-view-editor-close>Cancel</button>
+    <button class="btn" type="submit">Save</button>
+  </div>
+</form>
+      </div>
+      
+      
+      <div class="sidebar__group-row" data-view-group-row="1" data-view-group-drag="1">
+        <details class="sidebar__group" open>
+          <summary class="sidebar__group-head drop-target" data-view-group="1" draggable="true" title="Divers" aria-label="Divers">
+            
+            
+            <span class="sidebar__name">Divers</span>
+          </summary>
+          <form class="sidebar__group-rename" method="post" action="/partials/view-groups/1/rename" hx-post="/partials/view-groups/1/rename" hx-target="#sidebar" hx-swap="none" data-view-group-rename hidden>
+            <label class="sr-only" for="sidebar-view-group-name-1">Name</label>
+            <input class="input" id="sidebar-view-group-name-1" name="name" value="Divers" maxlength="64" required autocomplete="off">
+          </form>
+          <form class="sidebar__group-rename sidebar__tag-edit--colors" method="post" action="/partials/view-groups/1/color" hx-post="/partials/view-groups/1/color" hx-target="#sidebar" hx-swap="none" data-view-group-edit="color" hidden>
+            <span class="sr-only">Color</span>
+            <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+          </form>
+          <ul class="sidebar__group-list" data-view-group-list="1">
+            <li class="sidebar__view-create-slot" data-view-create-slot="1" hidden></li>
+            
+            
+<li class="sidebar__row" data-view-row data-view-id="4">
+  <a class="sidebar__link" href="/views/[id]" draggable="true" data-view="4" title="Tout" aria-label="Tout">
+    
+    
+    <span class="sidebar__name">Tout</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-view-menu>
+  <summary class="sidebar__control" title="Actions" aria-label="Actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-view-rename-open>Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-view-edit-open="color">Change color</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" hx-get="/partials/views/[id]/edit" hx-target="#sidebar" hx-swap="outerHTML">Edit</button></li>
+        <li role="none">
+          <form method="post" action="/views/[id]/duplicate" hx-post="/views/[id]/duplicate" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item" type="submit" role="menuitem">Duplicate</button>
+          </form>
+        </li>
+        <li role="none">
+          <form method="post" action="/views/[id]/delete" hx-post="/views/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this view?">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__view-rename" method="post" action="/views/[id]/rename" hx-post="/views/[id]/rename" hx-target="#sidebar" hx-swap="none" data-view-rename hidden>
+    <label class="sr-only" for="sidebar-view-name-4">Name</label>
+    <input class="input" id="sidebar-view-name-4" name="name" value="Tout" maxlength="100" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/views/[id]/color" hx-post="/views/[id]/color" hx-target="#sidebar" hx-swap="none" data-view-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+  
+  
+</li>
+            
+            
+<li class="sidebar__row" data-view-row data-view-id="3">
+  <a class="sidebar__link" href="/views/[id]" draggable="true" data-view="3" title="Archives" aria-label="Archives">
+    
+    
+    <span class="sidebar__name">Archives</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-view-menu>
+  <summary class="sidebar__control" title="Actions" aria-label="Actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-view-rename-open>Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-view-edit-open="color">Change color</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" hx-get="/partials/views/[id]/edit" hx-target="#sidebar" hx-swap="outerHTML">Edit</button></li>
+        <li role="none">
+          <form method="post" action="/views/[id]/duplicate" hx-post="/views/[id]/duplicate" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item" type="submit" role="menuitem">Duplicate</button>
+          </form>
+        </li>
+        <li role="none">
+          <form method="post" action="/views/[id]/delete" hx-post="/views/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this view?">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__view-rename" method="post" action="/views/[id]/rename" hx-post="/views/[id]/rename" hx-target="#sidebar" hx-swap="none" data-view-rename hidden>
+    <label class="sr-only" for="sidebar-view-name-3">Name</label>
+    <input class="input" id="sidebar-view-name-3" name="name" value="Archives" maxlength="100" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/views/[id]/color" hx-post="/views/[id]/color" hx-target="#sidebar" hx-swap="none" data-view-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+  
+  
+</li>
+            
+            
+<li class="sidebar__row" data-view-row data-view-id="2">
+  <a class="sidebar__link" href="/views/[id]" draggable="true" data-view="2" title="Projets" aria-label="Projets">
+    
+    
+    <span class="sidebar__name">Projets</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-view-menu>
+  <summary class="sidebar__control" title="Actions" aria-label="Actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-view-rename-open>Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-view-edit-open="color">Change color</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" hx-get="/partials/views/[id]/edit" hx-target="#sidebar" hx-swap="outerHTML">Edit</button></li>
+        <li role="none">
+          <form method="post" action="/views/[id]/duplicate" hx-post="/views/[id]/duplicate" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item" type="submit" role="menuitem">Duplicate</button>
+          </form>
+        </li>
+        <li role="none">
+          <form method="post" action="/views/[id]/delete" hx-post="/views/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this view?">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__view-rename" method="post" action="/views/[id]/rename" hx-post="/views/[id]/rename" hx-target="#sidebar" hx-swap="none" data-view-rename hidden>
+    <label class="sr-only" for="sidebar-view-name-2">Name</label>
+    <input class="input" id="sidebar-view-name-2" name="name" value="Projets" maxlength="100" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/views/[id]/color" hx-post="/views/[id]/color" hx-target="#sidebar" hx-swap="none" data-view-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+  
+  
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--amber" data-view-row data-view-id="1">
+  <a class="sidebar__link" href="/views/[id]" draggable="true" data-view="1" title="Factures" aria-label="Factures">
+    
+    <span class="dot dot--amber" aria-hidden="true"></span>
+    
+    <span class="sidebar__name">Factures</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-view-menu>
+  <summary class="sidebar__control" title="Actions" aria-label="Actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-view-rename-open>Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-view-edit-open="color">Change color</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" hx-get="/partials/views/[id]/edit" hx-target="#sidebar" hx-swap="outerHTML">Edit</button></li>
+        <li role="none">
+          <form method="post" action="/views/[id]/duplicate" hx-post="/views/[id]/duplicate" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item" type="submit" role="menuitem">Duplicate</button>
+          </form>
+        </li>
+        <li role="none">
+          <form method="post" action="/views/[id]/delete" hx-post="/views/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this view?">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__view-rename" method="post" action="/views/[id]/rename" hx-post="/views/[id]/rename" hx-target="#sidebar" hx-swap="none" data-view-rename hidden>
+    <label class="sr-only" for="sidebar-view-name-1">Name</label>
+    <input class="input" id="sidebar-view-name-1" name="name" value="Factures" maxlength="100" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/views/[id]/color" hx-post="/views/[id]/color" hx-target="#sidebar" hx-swap="none" data-view-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch is-on" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+  
+  
+</li>
+            
+          </ul>
+        </details>
+        <div class="sidebar__actions">
+          <button class="sidebar__control sidebar__action" type="button" data-view-create-open data-view-group="1" title="New view" aria-label="New view"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 3.25v9.5M3.25 8h9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"></path></svg></button>
+          <details class="dropdown sidebar__action" data-view-group-menu>
+  <summary class="sidebar__control" title="View group actions" aria-label="View group actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+              <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-view-group-edit-open="name">Rename</button></li>
+              <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-view-group-edit-open="color">Change color</button></li>
+              <li role="none">
+                <form method="post" action="/partials/view-groups/1/delete" hx-post="/partials/view-groups/1/delete" hx-target="#sidebar" hx-swap="none">
+                  <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this view group and all its views?">Delete</button>
+                </form>
+              </li>
+            </ul>
+</details>
+        </div>
+      </div>
+      
+      
+    </section>
+
+    <section class="sidebar__section">
+      <div class="sidebar__section-head">
+        <p class="sidebar__label">Tags</p>
+        <button class="sidebar__control sidebar__action" type="button" data-group-create-open title="Create group" aria-label="Create group"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 3.25v9.5M3.25 8h9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"></path></svg></button>
+      </div>
+      <form class="sidebar__group-create" method="post" action="/partials/groups" hx-post="/partials/groups" hx-target="#sidebar" hx-swap="none" data-group-create-form hidden>
+        <label class="sr-only" for="sidebar-new-group">Name</label>
+        <input type="hidden" name="color" value="[color]">
+        <span class="dot dot--[color] sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+        <span class="sidebar__create-field">
+          <input class="input" id="sidebar-new-group" name="name" value="" maxlength="64" autocomplete="off" placeholder="New group" required>
+          
+          
+        </span>
+      </form>
+      
+      
+      
+      <div class="sidebar__group-row" data-group-row="[id]" data-group-drag="4">
+        <details class="sidebar__group" open>
+          <summary class="sidebar__group-head drop-target" data-group="[id]" draggable="true" title="Divers" aria-label="Divers">
+            
+            
+            <span class="sidebar__name">Divers</span>
+          </summary>
+          <form class="sidebar__group-rename" method="post" action="/partials/groups/[id]/rename" hx-post="/partials/groups/[id]/rename" hx-target="#sidebar" hx-swap="none" data-group-rename hidden>
+            <label class="sr-only" for="sidebar-group-name-[id]">Name</label>
+            <input class="input" id="sidebar-group-name-[id]" name="name" value="Divers" maxlength="64" required autocomplete="off">
+          </form>
+          <form class="sidebar__group-rename sidebar__tag-edit--colors" method="post" action="/partials/groups/[id]/color" hx-post="/partials/groups/[id]/color" hx-target="#sidebar" hx-swap="none" data-group-edit="color" hidden>
+            <span class="sr-only">Color</span>
+            <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+          </form>
+          <ul class="sidebar__group-list" data-group-list="[id]">
+            
+<li class="sidebar__row sidebar__row--create">
+  <form class="sidebar__tag-create" method="post" action="/partials/tags" hx-post="/partials/tags" hx-target="#sidebar" hx-swap="none" data-group-tag-form hidden>
+    <input type="hidden" name="group" value="[id]">
+    <input type="hidden" name="color" value="[color]">
+    <label class="sr-only" for="sidebar-tag-create-[id]">Name</label>
+    <span class="sidebar__link">
+      <span class="dot dot--[color] sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <input class="input sidebar__name sidebar__name--input" id="sidebar-tag-create-[id]" name="name" value="" maxlength="64" required autocomplete="off" placeholder="New tag">
+    </span>
+    
+    
+  </form>
+</li>
+
+            
+            
+<li class="sidebar__row sidebar__row--red" data-tag-row data-tag-id="2">
+  <a class="sidebar__link" href="/?tag=c-red" draggable="true" data-tag="c-red" title="c-red" aria-label="c-red">
+    <span class="dot dot--red sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>c-red</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--red sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="c-red" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch is-on" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--teal" data-tag-row data-tag-id="6">
+  <a class="sidebar__link" href="/?tag=c-teal" draggable="true" data-tag="c-teal" title="c-teal" aria-label="c-teal">
+    <span class="dot dot--teal sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>c-teal</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--teal sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="c-teal" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch is-on" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+          </ul>
+        </details>
+        <div class="sidebar__actions">
+          <button class="sidebar__control sidebar__action" type="button" data-group-tag-open="[id]" title="Create tag" aria-label="Create tag"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 3.25v9.5M3.25 8h9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"></path></svg></button>
+          <details class="dropdown sidebar__action" data-group-menu>
+  <summary class="sidebar__control" title="Group actions" aria-label="Group actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+              <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-group-edit-open="name">Rename</button></li>
+              <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-group-edit-open="color">Change color</button></li>
+              <li role="none">
+                <form method="post" action="/partials/groups/[id]/delete" hx-post="/partials/groups/[id]/delete" hx-target="#sidebar" hx-swap="none">
+                  <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this group and all its tags? Files will lose these tags.">Delete</button>
+                </form>
+              </li>
+            </ul>
+</details>
+        </div>
+      </div>
+      
+      <div class="sidebar__group-row" data-group-row="[id]" data-group-drag="3">
+        <details class="sidebar__group" open>
+          <summary class="sidebar__group-head drop-target" data-group="[id]" draggable="true" title="Projets" aria-label="Projets">
+            
+            <span class="dot dot--indigo" aria-hidden="true"></span>
+            
+            <span class="sidebar__name">Projets</span>
+          </summary>
+          <form class="sidebar__group-rename" method="post" action="/partials/groups/[id]/rename" hx-post="/partials/groups/[id]/rename" hx-target="#sidebar" hx-swap="none" data-group-rename hidden>
+            <label class="sr-only" for="sidebar-group-name-[id]">Name</label><span class="dot dot--indigo" aria-hidden="true"></span>
+            <input class="input" id="sidebar-group-name-[id]" name="name" value="Projets" maxlength="64" required autocomplete="off">
+          </form>
+          <form class="sidebar__group-rename sidebar__tag-edit--colors" method="post" action="/partials/groups/[id]/color" hx-post="/partials/groups/[id]/color" hx-target="#sidebar" hx-swap="none" data-group-edit="color" hidden>
+            <span class="sr-only">Color</span>
+            <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch is-on" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+          </form>
+          <ul class="sidebar__group-list" data-group-list="[id]">
+            
+<li class="sidebar__row sidebar__row--create">
+  <form class="sidebar__tag-create" method="post" action="/partials/tags" hx-post="/partials/tags" hx-target="#sidebar" hx-swap="none" data-group-tag-form hidden>
+    <input type="hidden" name="group" value="[id]">
+    <input type="hidden" name="color" value="[color]">
+    <label class="sr-only" for="sidebar-tag-create-[id]">Name</label>
+    <span class="sidebar__link">
+      <span class="dot dot--[color] sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <input class="input sidebar__name sidebar__name--input" id="sidebar-tag-create-[id]" name="name" value="" maxlength="64" required autocomplete="off" placeholder="New tag">
+    </span>
+    
+    
+  </form>
+</li>
+
+            
+            
+<li class="sidebar__row sidebar__row--indigo" data-tag-row data-tag-id="9">
+  <a class="sidebar__link" href="/?tag=c-indigo" draggable="true" data-tag="c-indigo" title="c-indigo" aria-label="c-indigo">
+    <span class="dot dot--indigo sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>c-indigo</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--indigo sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="c-indigo" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch is-on" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--violet" data-tag-row data-tag-id="10">
+  <a class="sidebar__link" href="/?tag=c-violet" draggable="true" data-tag="c-violet" title="c-violet" aria-label="c-violet">
+    <span class="dot dot--violet sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>c-violet</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--violet sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="c-violet" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch is-on" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+          </ul>
+        </details>
+        <div class="sidebar__actions">
+          <button class="sidebar__control sidebar__action" type="button" data-group-tag-open="[id]" title="Create tag" aria-label="Create tag"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 3.25v9.5M3.25 8h9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"></path></svg></button>
+          <details class="dropdown sidebar__action" data-group-menu>
+  <summary class="sidebar__control" title="Group actions" aria-label="Group actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+              <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-group-edit-open="name">Rename</button></li>
+              <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-group-edit-open="color">Change color</button></li>
+              <li role="none">
+                <form method="post" action="/partials/groups/[id]/delete" hx-post="/partials/groups/[id]/delete" hx-target="#sidebar" hx-swap="none">
+                  <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this group and all its tags? Files will lose these tags.">Delete</button>
+                </form>
+              </li>
+            </ul>
+</details>
+        </div>
+      </div>
+      
+      <div class="sidebar__group-row" data-group-row="[id]" data-group-drag="2">
+        <details class="sidebar__group" open>
+          <summary class="sidebar__group-head drop-target" data-group="[id]" draggable="true" title="Finance" aria-label="Finance">
+            
+            <span class="dot dot--amber" aria-hidden="true"></span>
+            
+            <span class="sidebar__name">Finance</span>
+          </summary>
+          <form class="sidebar__group-rename" method="post" action="/partials/groups/[id]/rename" hx-post="/partials/groups/[id]/rename" hx-target="#sidebar" hx-swap="none" data-group-rename hidden>
+            <label class="sr-only" for="sidebar-group-name-[id]">Name</label><span class="dot dot--amber" aria-hidden="true"></span>
+            <input class="input" id="sidebar-group-name-[id]" name="name" value="Finance" maxlength="64" required autocomplete="off">
+          </form>
+          <form class="sidebar__group-rename sidebar__tag-edit--colors" method="post" action="/partials/groups/[id]/color" hx-post="/partials/groups/[id]/color" hx-target="#sidebar" hx-swap="none" data-group-edit="color" hidden>
+            <span class="sr-only">Color</span>
+            <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch is-on" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+          </form>
+          <ul class="sidebar__group-list" data-group-list="[id]">
+            
+<li class="sidebar__row sidebar__row--create">
+  <form class="sidebar__tag-create" method="post" action="/partials/tags" hx-post="/partials/tags" hx-target="#sidebar" hx-swap="none" data-group-tag-form hidden>
+    <input type="hidden" name="group" value="[id]">
+    <input type="hidden" name="color" value="[color]">
+    <label class="sr-only" for="sidebar-tag-create-[id]">Name</label>
+    <span class="sidebar__link">
+      <span class="dot dot--[color] sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <input class="input sidebar__name sidebar__name--input" id="sidebar-tag-create-[id]" name="name" value="" maxlength="64" required autocomplete="off" placeholder="New tag">
+    </span>
+    
+    
+  </form>
+</li>
+
+            
+            
+<li class="sidebar__row sidebar__row--blue" data-tag-row data-tag-id="8">
+  <a class="sidebar__link" href="/?tag=c-blue" draggable="true" data-tag="c-blue" title="c-blue" aria-label="c-blue">
+    <span class="dot dot--blue sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>c-blue</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--blue sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="c-blue" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch is-on" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--green" data-tag-row data-tag-id="5">
+  <a class="sidebar__link" href="/?tag=c-green" draggable="true" data-tag="c-green" title="c-green" aria-label="c-green">
+    <span class="dot dot--green sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>c-green</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--green sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="c-green" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch is-on" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--amber" data-tag-row data-tag-id="4">
+  <a class="sidebar__link" href="/?tag=c-amber" draggable="true" data-tag="c-amber" title="c-amber" aria-label="c-amber">
+    <span class="dot dot--amber sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>c-amber</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--amber sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="c-amber" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch is-on" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+          </ul>
+        </details>
+        <div class="sidebar__actions">
+          <button class="sidebar__control sidebar__action" type="button" data-group-tag-open="[id]" title="Create tag" aria-label="Create tag"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 3.25v9.5M3.25 8h9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"></path></svg></button>
+          <details class="dropdown sidebar__action" data-group-menu>
+  <summary class="sidebar__control" title="Group actions" aria-label="Group actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+              <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-group-edit-open="name">Rename</button></li>
+              <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-group-edit-open="color">Change color</button></li>
+              <li role="none">
+                <form method="post" action="/partials/groups/[id]/delete" hx-post="/partials/groups/[id]/delete" hx-target="#sidebar" hx-swap="none">
+                  <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this group and all its tags? Files will lose these tags.">Delete</button>
+                </form>
+              </li>
+            </ul>
+</details>
+        </div>
+      </div>
+      
+      <div class="sidebar__group-row" data-group-row="[id]" data-group-drag="1">
+        <details class="sidebar__group" open>
+          <summary class="sidebar__group-head drop-target" data-group="[id]" draggable="true" title="Tests" aria-label="Tests">
+            
+            
+            <span class="sidebar__name">Tests</span>
+          </summary>
+          <form class="sidebar__group-rename" method="post" action="/partials/groups/[id]/rename" hx-post="/partials/groups/[id]/rename" hx-target="#sidebar" hx-swap="none" data-group-rename hidden>
+            <label class="sr-only" for="sidebar-group-name-[id]">Name</label>
+            <input class="input" id="sidebar-group-name-[id]" name="name" value="Tests" maxlength="64" required autocomplete="off">
+          </form>
+          <form class="sidebar__group-rename sidebar__tag-edit--colors" method="post" action="/partials/groups/[id]/color" hx-post="/partials/groups/[id]/color" hx-target="#sidebar" hx-swap="none" data-group-edit="color" hidden>
+            <span class="sr-only">Color</span>
+            <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+          </form>
+          <ul class="sidebar__group-list" data-group-list="[id]">
+            
+<li class="sidebar__row sidebar__row--create">
+  <form class="sidebar__tag-create" method="post" action="/partials/tags" hx-post="/partials/tags" hx-target="#sidebar" hx-swap="none" data-group-tag-form hidden>
+    <input type="hidden" name="group" value="[id]">
+    <input type="hidden" name="color" value="[color]">
+    <label class="sr-only" for="sidebar-tag-create-[id]">Name</label>
+    <span class="sidebar__link">
+      <span class="dot dot--[color] sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+      <input class="input sidebar__name sidebar__name--input" id="sidebar-tag-create-[id]" name="name" value="" maxlength="64" required autocomplete="off" placeholder="New tag">
+    </span>
+    
+    
+  </form>
+</li>
+
+            
+            
+<li class="sidebar__row sidebar__row--neutral" data-tag-row data-tag-id="1">
+  <a class="sidebar__link" href="/?tag=c-neutral" draggable="true" data-tag="c-neutral" title="c-neutral" aria-label="c-neutral">
+    <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>c-neutral</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="c-neutral" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch is-on" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--orange" data-tag-row data-tag-id="3">
+  <a class="sidebar__link" href="/?tag=c-orange" draggable="true" data-tag="c-orange" title="c-orange" aria-label="c-orange">
+    <span class="dot dot--orange sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>c-orange</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--orange sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="c-orange" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch is-on" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--cyan" data-tag-row data-tag-id="7">
+  <a class="sidebar__link" href="/?tag=c-cyan" draggable="true" data-tag="c-cyan" title="c-cyan" aria-label="c-cyan">
+    <span class="dot dot--cyan sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>c-cyan</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--cyan sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="c-cyan" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch is-on" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--pink" data-tag-row data-tag-id="11">
+  <a class="sidebar__link" href="/?tag=c-pink" draggable="true" data-tag="c-pink" title="c-pink" aria-label="c-pink">
+    <span class="dot dot--pink sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>c-pink</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--pink sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="c-pink" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch is-on" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--brown" data-tag-row data-tag-id="12">
+  <a class="sidebar__link" href="/?tag=c-brown" draggable="true" data-tag="c-brown" title="c-brown" aria-label="c-brown">
+    <span class="dot dot--brown sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>c-brown</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--brown sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="c-brown" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch is-on" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--neutral" data-tag-row data-tag-id="13">
+  <a class="sidebar__link" href="/?tag=facture" draggable="true" data-tag="facture" title="facture" aria-label="facture">
+    <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>facture</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="facture" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch is-on" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--neutral" data-tag-row data-tag-id="14">
+  <a class="sidebar__link" href="/?tag=projet-alpha" draggable="true" data-tag="projet-alpha" title="projet-alpha" aria-label="projet-alpha">
+    <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>projet-alpha</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="projet-alpha" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch is-on" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--neutral" data-tag-row data-tag-id="15">
+  <a class="sidebar__link" href="/?tag=paye" draggable="true" data-tag="paye" title="paye" aria-label="paye">
+    <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>paye</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="paye" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch is-on" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--neutral" data-tag-row data-tag-id="16">
+  <a class="sidebar__link" href="/?tag=projet-beta" draggable="true" data-tag="projet-beta" title="projet-beta" aria-label="projet-beta">
+    <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>projet-beta</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="projet-beta" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch is-on" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+            
+<li class="sidebar__row sidebar__row--neutral" data-tag-row data-tag-id="17">
+  <a class="sidebar__link" href="/?tag=archive" draggable="true" data-tag="archive" title="archive" aria-label="archive">
+    <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <span class="sidebar__name" data-tag-name>archive</span>
+  </a>
+  <div class="sidebar__actions">
+    <details class="dropdown sidebar__action" data-tag-menu>
+  <summary class="sidebar__control" title="Tag actions" aria-label="Tag actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">Rename</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">Change color</button></li>
+        <li role="none">
+          <form method="post" action="/partials/tags/[id]/delete" hx-post="/partials/tags/[id]/delete" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this tag? It will be removed from all files.">Delete</button>
+          </form>
+        </li>
+      </ul>
+</details>
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/[id]/rename" hx-post="/partials/tags/[id]/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-[id]">Name</label>
+    <span class="dot dot--neutral sidebar__tag-color" data-tag-color aria-hidden="true"></span>
+    <input class="input" id="sidebar-tag-name-[id]" name="name" value="archive" maxlength="64" required autocomplete="off">
+  </form>
+  <form class="sidebar__tag-edit sidebar__tag-edit--colors" method="post" action="/partials/tags/[id]/color" hx-post="/partials/tags/[id]/color" hx-target="#sidebar" hx-swap="none" data-tag-edit="color" hidden>
+    <span class="sr-only">Color</span>
+    <button class="dot dot--neutral sidebar__tag-swatch is-on" type="submit" name="color" value="neutral" title="Neutral" aria-label="Neutral"></button>
+<button class="dot dot--red sidebar__tag-swatch" type="submit" name="color" value="red" title="Red" aria-label="Red"></button>
+<button class="dot dot--orange sidebar__tag-swatch" type="submit" name="color" value="orange" title="Orange" aria-label="Orange"></button>
+<button class="dot dot--amber sidebar__tag-swatch" type="submit" name="color" value="amber" title="Amber" aria-label="Amber"></button>
+<button class="dot dot--green sidebar__tag-swatch" type="submit" name="color" value="green" title="Green" aria-label="Green"></button>
+<button class="dot dot--teal sidebar__tag-swatch" type="submit" name="color" value="teal" title="Teal" aria-label="Teal"></button>
+<button class="dot dot--cyan sidebar__tag-swatch" type="submit" name="color" value="cyan" title="Cyan" aria-label="Cyan"></button>
+<button class="dot dot--blue sidebar__tag-swatch" type="submit" name="color" value="blue" title="Blue" aria-label="Blue"></button>
+<button class="dot dot--indigo sidebar__tag-swatch" type="submit" name="color" value="indigo" title="Indigo" aria-label="Indigo"></button>
+<button class="dot dot--violet sidebar__tag-swatch" type="submit" name="color" value="violet" title="Violet" aria-label="Violet"></button>
+<button class="dot dot--pink sidebar__tag-swatch" type="submit" name="color" value="pink" title="Pink" aria-label="Pink"></button>
+<button class="dot dot--brown sidebar__tag-swatch" type="submit" name="color" value="brown" title="Brown" aria-label="Brown"></button>
+
+  </form>
+</li>
+            
+          </ul>
+        </details>
+        <div class="sidebar__actions">
+          <button class="sidebar__control sidebar__action" type="button" data-group-tag-open="[id]" title="Create tag" aria-label="Create tag"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 3.25v9.5M3.25 8h9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"></path></svg></button>
+          <details class="dropdown sidebar__action" data-group-menu>
+  <summary class="sidebar__control" title="Group actions" aria-label="Group actions" aria-haspopup="menu"><svg class="sidebar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" stroke-width="1.6"><rect x="1.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="6.5" y="6.5" width="3" height="3" fill="currentColor"></rect><rect x="11.5" y="6.5" width="3" height="3" fill="currentColor"></rect></svg></summary>
+  <ul class="dropdown__panel" role="menu">
+
+              <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-group-edit-open="name">Rename</button></li>
+              <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-group-edit-open="color">Change color</button></li>
+              <li role="none">
+                <form method="post" action="/partials/groups/[id]/delete" hx-post="/partials/groups/[id]/delete" hx-target="#sidebar" hx-swap="none">
+                  <button class="dropdown__item dropdown__item--danger" type="submit" role="menuitem" data-confirm="Delete this group and all its tags? Files will lose these tags.">Delete</button>
+                </form>
+              </li>
+            </ul>
+</details>
+        </div>
+      </div>
+      
+    </section>
+  </div>
+</aside>

@@ -1,0 +1,83 @@
+# Dev standalone — PAS de fichier compose supplementaire.
+# Usage (depuis la racine du repo) :
+#   scripts/gates.sh                   # fmt + clippy + test + htmx, sans conteneur residuel
+#   scripts/build.sh [--gates] [--up]  # image runtime, cache BuildKit borne
+#   docker compose -f docker/compose.dev.yml up --build audit
+# Les portes vivent dans scripts/gates.sh, pas dans ce fichier.
+# Nom explicite : sans lui le projet prendrait "docker" (nom du dossier) et "down --remove-orphans" tuerait d'autres stacks.
+name: fs-ez-dev
+services:
+  # Serveur de dev sur l'image runtime (binaire release musl).
+  # Root au démarrage : ../data est chowné en PUID:PGID puis le serveur bascule.
+  fs-ez:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: runtime
+    image: fs-ez-dev
+    container_name: fs-ez-dev
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8678
+      # 16 Gio par defaut, surchargeable sans editer le fichier (ex. 6 Gio = 6442450944).
+      MAX_UPLOAD: "${MAX_UPLOAD:-17179869184}"
+      USERNAME: user
+      PASSWORD: dev-password-1234
+      PUID: "${PUID:-1000}"
+      PGID: "${PGID:-1000}"
+      RUST_LOG: info
+      # Fuseau horaire des sauvegardes et des dates affichées, ex. Europe/Paris.
+      TZ: "${TZ:-Etc/UTC}"
+    volumes:
+      - ../data:/data
+      # État (base + sauvegardes) hors du root, monté sur /config.
+      - ../config:/config
+    ports:
+      - 18678:8678
+    restart: unless-stopped
+    develop:
+      watch:
+        - action: sync
+          path: ../static/js
+          target: /static/js
+        - action: sync
+          path: ../static/vendor
+          target: /static/vendor
+        - action: sync
+          path: ../static/img
+          target: /static/img
+        - action: rebuild
+          path: ../crates
+        - action: rebuild
+          path: ../templates
+        - action: rebuild
+          path: ../locales
+        - action: rebuild
+          path: ../Cargo.toml
+        - action: rebuild
+          path: ../Cargo.lock
+        - action: rebuild
+          path: ../build.rs
+
+  # Audit HTTP fiche 43 sur le serveur de dev, via le reseau hote.
+  audit:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: audit
+    image: fs-ez-audit
+    profiles: ["audit"]
+    network_mode: host
+    environment:
+      BASE_URL: http://127.0.0.1:18678
+      AUDIT_USER: user
+      AUDIT_PASS: dev-password-1234
+      AUDIT_ROOT: /data
+      AUDIT_CONFIG: /config
+    volumes:
+      - ../data:/data
+      - ../config:/config
+    depends_on:
+      fs-ez:
+        condition: service_healthy
+    restart: "no"

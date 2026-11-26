@@ -1,0 +1,223 @@
+@layer components {
+  /* ------------------------------------------------------------ builder -- */
+  .no-js .builder {
+    display: none;
+  }
+
+  .builder [hidden] {
+    display: none;
+  }
+
+  .builder {
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+    max-width: 52rem;
+  }
+
+  .builder__group {
+    border: 1px solid var(--line);
+    background: var(--bg-raised);
+  }
+
+  .builder__group--root {
+    border: 0;
+    background: transparent;
+  }
+
+  .builder__group--nested {
+    padding: .45rem;
+  }
+
+  .builder__items {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+  }
+
+  .builder__items > .builder__group--nested {
+    margin-left: .5rem;
+  }
+
+  .builder__group-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .35rem;
+    margin-bottom: .4rem;
+  }
+
+  .builder__group-tools {
+    display: flex;
+    gap: .2rem;
+    margin-left: auto;
+  }
+
+  .builder__condition {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    gap: .3rem;
+    padding: .25rem;
+    border: 1px solid var(--line);
+    background: var(--bg);
+  }
+
+  .builder__condition > .dropdown:has(+ .builder__logic) {
+    flex: 0 0 4.5rem;
+  }
+
+  .builder__condition > .dropdown:has(+ .builder__cmp) {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .builder__group-head > .dropdown:has(+ .builder__group-op) {
+    flex: 0 0 4rem;
+    min-width: 0;
+  }
+
+  .builder__condition > .dropdown > .dropdown__trigger,
+  .builder__group-head > .dropdown > .dropdown__trigger {
+    min-height: 1.9rem;
+    padding: .2rem .4rem;
+    font-size: .75rem;
+  }
+
+  .builder__condition > .dropdown:has(+ .builder__logic) > .dropdown__panel,
+  .builder__group-head > .dropdown > .dropdown__panel {
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .builder__condition > .dropdown:has(+ .builder__cmp) > .dropdown__panel {
+    right: 0;
+    left: auto;
+    width: 12rem;
+    min-width: 12rem;
+    max-width: 12rem;
+  }
+
+  .builder__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 1.75rem;
+    height: 1.9rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--muted);
+  }
+
+  .builder__icon:hover,
+  .builder__icon:focus-visible {
+    background: var(--bg-sunken);
+    color: var(--ink);
+  }
+
+  .builder__icon--danger:hover,
+  .builder__icon--danger:focus-visible {
+    color: var(--danger);
+  }
+
+  .builder__icon .sidebar__icon {
+    width: .9rem;
+    height: .9rem;
+  }
+
+  .builder__tagset {
+    flex: 1 1 100%;
+    min-width: 0;
+    padding: .12rem .25rem;
+    border: 1px solid var(--line-strong);
+    background: var(--bg-raised);
+  }
+
+  .builder__tagset-summary {
+    gap: .25rem;
+    min-height: 1.7rem;
+    padding: .1rem .2rem;
+    color: var(--muted);
+    font-size: .75rem;
+  }
+
+  .builder__tagset-chips {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .25rem;
+    min-width: 0;
+  }
+
+  .builder__tagset-chips:empty {
+    display: none;
+  }
+
+  .builder__tagset:has(.builder__tagset-chips:not(:empty)) .builder__tagset-trigger-label {
+    display: none;
+  }
+
+  .builder__chip > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .builder__chip-remove {
+    flex: none;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font-size: .85rem;
+    line-height: 1;
+  }
+
+  .builder__chip-remove:hover,
+  .builder__chip-remove:focus-visible {
+    color: var(--ink);
+  }
+
+  .builder__empty {
+    margin: .4rem 0 .25rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: .72rem;
+  }
+
+  .builder__footer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-top: .55rem;
+  }
+
+  .builder__add {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: .2rem 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font-size: .8rem;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .builder__add:hover,
+  .builder__add:focus-visible {
+    color: var(--app-ink);
+  }
+
+  .builder__add .sidebar__icon {
+    width: .8rem;
+    height: .8rem;
+  }
+
+}

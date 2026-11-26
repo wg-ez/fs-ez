@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "lang": "en"
+  },
+  "app": {
+    "title": "fs-ez"
+  },
+  "shell": {
+    "search": "Search",
+    "search_filters": "Filter by tag",
+    "search_all_tags": "All tags",
+    "search_exclude_hint": "Alt+click to exclude",
+    "actions": "Global actions",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "language": "Language",
+    "logout": "Sign out",
+    "navigation": "Navigation",
+    "recent_days": "Recently tagged within",
+    "recent_file_days": "Recent files within",
+    "page_size": "Page size",
+    "default_sort": "Default sort",
+    "backup_retention": "Backup retention",
+    "backup_hour": "Backup time",
+    "days": "days",
+    "files": "files"
+  },
+  "settings": {
+    "title": "Settings",
+    "breadcrumb": "Settings navigation",
+    "intro": "Navigation preferences, inbox imports and API keys.",
+    "save": "Save changes",
+    "saved": "Settings saved.",
+    "inbox": "Inbox",
+    "inbox_hint": "Scan the inbox folder now and import new files.",
+    "backup": "Backups",
+    "backup_now": "Backup now",
+    "backup_done": "Backup created.",
+    "backup_failed": "Backup failed.",
+    "api_keys": "API keys"
+  },
+  "topbar": {
+    "collapse": "Hide sidebar",
+    "expand": "Show sidebar"
+  },
+  "theme": {
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "nav": {
+    "label": "Navigation",
+    "all": "All files",
+    "untagged": "Untagged",
+    "recent": "Recently tagged",
+    "recent_files": "Recent files",
+    "views": "Views",
+    "tags": "Tags",
+    "virtual_folders": "Virtual folders"
+  },
+  "footer": {
+    "version": "Version"
+  },
+  "files": {
+    "column": {
+      "name": "Name",
+      "tags": "Tags",
+      "size": "Size",
+      "date": "Date",
+      "resize": "Resize column",
+      "resize_hint": "Drag to resize, double-click to reset"
+    },
+    "loading": "Loading files",
+    "empty": "No file matches this selection.",
+    "bulk": {
+      "updated": "files updated",
+      "failed": "failed",
+      "deleted": "files deleted",
+      "none": "No file selected"
+    },
+    "actions": "File actions",
+    "rename": "Rename",
+    "delete": "Delete",
+    "rename_single": "Select one file to rename",
+    "delete_error": "Delete failed",
+    "rename_done": "File renamed",
+    "rename_failed": "Rename failed"
+  },
+  "color": {
+    "neutral": "Neutral",
+    "red": "Red",
+    "orange": "Orange",
+    "amber": "Amber",
+    "green": "Green",
+    "teal": "Teal",
+    "cyan": "Cyan",
+    "blue": "Blue",
+    "indigo": "Indigo",
+    "violet": "Violet",
+    "pink": "Pink",
+    "brown": "Brown"
+  },
+  "tags": {
+    "create_tag": "Create tag",
+    "create_group": "Create group",
+    "new_group": "New group",
+    "new_tag": "New tag",
+    "column": {
+      "name": "Name",
+      "color": "Color"
+    },
+    "rename": "Rename",
+    "delete": "Delete",
+    "delete_confirm": "Delete this tag? It will be removed from all files.",
+    "delete_group_confirm": "Delete this group and all its tags? Files will lose these tags.",
+    "change_color": "Change color",
+    "actions": "Tag actions",
+    "group_actions": "Group actions",
+    "group_exists": "A group with this name already exists.",
+    "tag_exists": "A tag with this name already exists.",
+    "group_name_required": "Enter a group name.",
+    "tag_name_required": "Enter a tag name.",
+    "name_invalid": "This name is not valid."
+  },
+  "views": {
+    "new": "New view",
+    "new_group": "New view group",
+    "color": "Color",
+    "create_group": "Create view group",
+    "group_actions": "View group actions",
+    "group_exists": "A view group with this name already exists.",
+    "delete_group_confirm": "Delete this view group and all its views?",
+    "name": "Name",
+    "sort": "Sort",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "delete_confirm": "Delete this view?",
+    "duplicate": "Duplicate",
+    "edit": "Edit",
+    "rename": "Rename",
+    "actions": "Actions",
+    "sort_fields": {
+      "id": "Id",
+      "name": "Name",
+      "size": "Size",
+      "date": "Date"
+    },
+    "dir": {
+      "asc": "ascending",
+      "desc": "descending"
+    },
+    "builder": {
+      "filters": "Filters",
+      "where": "Where",
+      "group": "Group",
+      "and": "And",
+      "or": "Or",
+      "add_condition": "Add filter",
+      "add_group": "Add filter group",
+      "add_tag": "Add tag",
+      "tagset": "Exact tag set",
+      "empty": "No filter, every file is listed.",
+      "tag": "Tag",
+      "cmp": "Operator",
+      "remove": "Remove",
+      "has": "contains the tags",
+      "has_not": "does not contain the tags",
+      "only": "contains only the tags",
+      "not_only": "does not contain only the tags"
+    }
+  },
+  "error": {
+    "title": "Error",
+    "internal": "Internal server error"
+  },
+  "setup": {
+    "title": "Welcome to fs-ez",
+    "intro": "Create the user account to get started.",
+    "username": "Username",
+    "password": "Password",
+    "submit": "Create account",
+    "username_invalid": "Enter a username of 1 to 64 characters.",
+    "password_invalid": "Use a password of at least 12 characters.",
+    "exists": "A user account already exists.",
+    "too_many": "Too many attempts, try again later."
+  },
+  "login": {
+    "title": "Sign in",
+    "username": "Username",
+    "password": "Password",
+    "submit": "Sign in",
+    "error": "Invalid credentials"
+  },
+  "logout": "Sign out",
+  "colors": {
+    "amber": "Amber",
+    "green": "Green",
+    "blue": "Blue"
+  },
+  "inbox": {
+    "rescan": "Rescan inbox",
+    "rescan_started": "Inbox rescan started.",
+    "rescan_running": "An inbox rescan is already running."
+  },
+  "errors": {
+    "conflict": "This name is already used."
+  },
+  "tokens": {
+    "name": "Name",
+    "name_placeholder": "e.g. ci deploy",
+    "expires": "Optional expiry",
+    "create": "Create key",
+    "created": "New API key created",
+    "created_hint": "Copy this key now, it will not be shown again.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "never": "Never",
+    "no_expiry": "No expiry",
+    "column": {
+      "name": "Name",
+      "created": "Created",
+      "last_used": "Last used",
+      "expires": "Expires",
+      "actions": "Actions"
+    },
+    "revoke": "Revoke",
+    "revoke_confirm": "Revoke this API key? Clients using it will lose access.",
+    "name_invalid": "Enter a valid key name, 1 to 100 printable characters.",
+    "expires_invalid": "Expiration must be a future date in dd-mm-yyyy format.",
+    "exists": "A key with this name already exists.",
+    "not_found": "This API key no longer exists."
+  },
+  "toast": {
+    "error": "Something went wrong"
+  },
+  "virtual_folders": {
+    "new": "New folder",
+    "name": "Folder name",
+    "create": "Create",
+    "rename": "Rename",
+    "delete": "Delete",
+    "drop_hint": "Drop a file or folder here to move it.",
+    "move": "Move",
+    "move_here": "Move here",
+    "move_cancel": "Cancel move",
+    "parent": "Parent folder"
+  }
+}

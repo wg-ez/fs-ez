@@ -1,0 +1,304 @@
+name: docker
+
+# Triggers : tag `v*` = publication, dispatch manuel = publication, PR = portes seules.
+on:
+  push:
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag d'image (défaut : sha court du commit)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: docker-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}
+  SMOKE_PASSWORD: correct-horse-battery
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  gates:
+    name: portes fmt / clippy / test
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: fmt
+        run: docker build -f docker/Dockerfile --target fmt .
+      - name: clippy
+        run: docker build -f docker/Dockerfile --target clippy .
+      - name: test
+        run: docker build -f docker/Dockerfile --target test .
+
+  release:
+    name: build multi-arch et publication
+    needs: gates
+    # Aucune image sur une PR : seules les portes tournent.
+    if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    outputs:
+      tag: ${{ steps.meta.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Calculer les tags et vérifier la version
+        id: meta
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          version="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)"
+          if [ -z "$version" ]; then
+            echo "version introuvable dans Cargo.toml" >&2
+            exit 1
+          fi
+
+          case "$GITHUB_EVENT_NAME" in
+            workflow_dispatch)
+              tag="${INPUT_TAG:-sha-$(git rev-parse --short=12 HEAD)}"
+              if ! printf '%s' "$tag" | grep -Eq '^[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}$'; then
+                echo "tag d'image invalide: $tag" >&2
+                exit 1
+              fi
+              if [ "$GITHUB_REF" = "refs/heads/$DEFAULT_BRANCH" ]; then
+                default_branch=true
+              else
+                default_branch=false
+              fi
+              ;;
+            *)
+              tag="$GITHUB_REF_NAME"
+              if [ "v$version" != "$tag" ]; then
+                echo "tag $tag != v$version (Cargo.toml)" >&2
+                exit 1
+              fi
+              git fetch --no-tags origin "$DEFAULT_BRANCH"
+              if git merge-base --is-ancestor "$GITHUB_SHA" "origin/$DEFAULT_BRANCH"; then
+                default_branch=true
+              else
+                default_branch=false
+              fi
+              ;;
+          esac
+
+          tags="$IMAGE:$tag"
+          if [ "$default_branch" = true ]; then
+            tags="$tags,$IMAGE:latest"
+          fi
+          {
+            echo "version=$version"
+            echo "tag=$tag"
+            echo "tags=$tags"
+          } >> "$GITHUB_OUTPUT"
+          printf 'image: %s\n' "$tags"
+
+      - name: Vérifier l'absence de dépendance GPL
+        run: |
+          set -euo pipefail
+          cargo metadata --format-version 1 --locked > /tmp/metadata.json
+          python3 - <<'PY'
+          import json
+          import re
+          import sys
+
+          data = json.load(open("/tmp/metadata.json", encoding="utf-8"))
+          copyleft = re.compile(r"\b(A?GPL|LGPL)", re.IGNORECASE)
+
+          def copyleft_required(expr):
+              # Une alternative permissive (`MIT OR ... LGPL`) laisse le choix : pas bloquant.
+              return all(copyleft.search(part) for part in re.split(r"\s+OR\s+", expr))
+
+          bad = sorted(
+              f'{p["name"]} {p["version"]}: {p["license"]}'
+              for p in data["packages"]
+              if p.get("license") and copyleft_required(p["license"])
+          )
+          if bad:
+              print("dépendances copyleft interdites:", *bad, sep="\n  ", file=sys.stderr)
+              sys.exit(1)
+          print(f'{len(data["packages"])} paquets, aucune dépendance GPL obligatoire')
+          PY
+
+      - uses: docker/setup-qemu-action@v3
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build et push linux/amd64 + linux/arm64
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: runtime
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Digests du manifeste
+        run: docker buildx imagetools inspect "$IMAGE:${{ steps.meta.outputs.tag }}"
+
+      - name: Version sur les deux architectures
+        run: |
+          set -euo pipefail
+          image="$IMAGE:${{ steps.meta.outputs.tag }}"
+          for arch in amd64 arm64; do
+            echo "linux/$arch"
+            docker run --rm --platform "linux/$arch" "$image" version
+          done
+
+  smoke:
+    name: smoke tests runtime
+    needs: release
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-qemu-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Health, login, files, arrêt et intégrité
+        env:
+          TAG: ${{ needs.release.outputs.tag }}
+        run: |
+          set -euo pipefail
+          image="$IMAGE:$TAG"
+          data="$(mktemp -d)"
+          config="$(mktemp -d)"
+          names=()
+          cleanup() {
+            for name in "${names[@]:-}"; do
+              docker rm -f "$name" >/dev/null 2>&1 || true
+            done
+            # `config/` appartient au PUID du conteneur (1000 par defaut) : sans chown, rm -rf echoue.
+            if ! sudo -n chown -R "$(id -u):$(id -g)" "$data" "$config" >/dev/null 2>&1; then
+              docker run --rm -u 0 --platform linux/amd64 -v "$data:/data" -v "$config:/config" alpine:latest \
+                sh -c 'chmod -R a+rwX /data /config' >/dev/null 2>&1 || true
+            fi
+            rm -rf "$data" "$config" 2>/dev/null || true
+          }
+          trap cleanup EXIT
+          chmod 777 "$data"
+          chmod 777 "$config"
+          mkdir -p "$data/files"
+          chmod 777 "$data/files"
+
+          for arch in amd64 arm64; do
+            case "$arch" in
+              amd64) port=18679 ;;
+              arm64) port=18680 ;;
+            esac
+            name="fs-ez-smoke-$arch"
+            names+=("$name")
+            docker run -d --name "$name" --platform "linux/$arch" \
+              -p "$port:8678" \
+              -e USERNAME=user \
+              -e PASSWORD="$SMOKE_PASSWORD" \
+              -v "$data:/data" \
+              -v "$config:/config" \
+              "$image"
+
+            up=false
+            for _ in $(seq 1 90); do
+              if curl -fsS "http://127.0.0.1:$port/health" >/dev/null 2>&1; then
+                up=true
+                break
+              fi
+              sleep 1
+            done
+            if [ "$up" != true ]; then
+              echo "health indisponible ($arch)" >&2
+              docker logs "$name" >&2
+              exit 1
+            fi
+            curl -fsS "http://127.0.0.1:$port/health"
+            echo
+
+            jar="$data/cookies-$arch.txt"
+            curl -fsS -c "$jar" -X POST \
+              -H 'Sec-Fetch-Site: same-origin' \
+              -H "Origin: http://127.0.0.1:$port" \
+              --data-urlencode username=user \
+              --data-urlencode "password=$SMOKE_PASSWORD" \
+              "http://127.0.0.1:$port/login" -o /dev/null
+            curl -fsS -b "$jar" "http://127.0.0.1:$port/api/session" \
+              -o "$data/session-$arch.json"
+            grep -q '"username":"user"' "$data/session-$arch.json"
+
+            file="smoke-$arch.txt"
+            printf 'smoke %s\n' "$arch" > "$data/files/$file"
+            chmod 644 "$data/files/$file"
+            found=false
+            for _ in $(seq 1 60); do
+              curl -fsS -b "$jar" "http://127.0.0.1:$port/api/files" \
+                -o "$data/files-$arch.json"
+              if grep -q "$file" "$data/files-$arch.json"; then
+                found=true
+                break
+              fi
+              sleep 1
+            done
+            if [ "$found" != true ]; then
+              echo "fichier absent de l API files: $file ($arch)" >&2
+              docker logs "$name" >&2
+              exit 1
+            fi
+
+            started="$(date +%s)"
+            docker stop -t 10 "$name" >/dev/null
+            elapsed=$(( $(date +%s) - started ))
+            if [ "$elapsed" -ge 10 ]; then
+              echo "arrêt trop long ($arch): ${elapsed}s" >&2
+              exit 1
+            fi
+            docker rm -f "$name" >/dev/null
+            echo "arrêt $arch en ${elapsed}s"
+
+            rm -f "$data/files/$file"
+          done
+
+          # `config/` est en 0700/0600 pour le PUID du conteneur : lecture hote apres chmod.
+          if ! sudo -n chmod -R a+rwX "$config" 2>/dev/null; then
+            docker run --rm -u 0 --platform linux/amd64 \
+              -v "$config:/db" alpine:latest sh -c 'chmod -R a+rwX /db' \
+              >/dev/null 2>&1 || true
+          fi
+
+          python3 - "$config/fs-ez.db" <<'PY'
+          import sqlite3
+          import sys
+
+          db = sqlite3.connect(sys.argv[1])
+          result = db.execute("PRAGMA integrity_check").fetchone()[0]
+          print(f"integrity_check: {result}")
+          if result != "ok":
+              sys.exit(1)
+          PY

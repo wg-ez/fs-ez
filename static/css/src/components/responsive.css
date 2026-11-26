@@ -1,0 +1,68 @@
+@layer components {
+  /* ---------------------------------------------------------- responsive -- */
+  @media (max-width: 47.999rem) {
+    .shell {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .topbar {
+      gap: .5rem;
+      padding: 0 .5rem;
+    }
+
+    .topbar__toggle,
+    .topbar__link,
+    .btn,
+    .icon-btn {
+      min-height: 2.75rem;
+    }
+
+    .topbar__toggle,
+    .icon-btn {
+      min-width: 2.75rem;
+    }
+
+    .sidebar {
+      --sidebar-row-h: 2.75rem;
+      --sidebar-control-w: 2.75rem;
+      position: fixed;
+      top: var(--nav-h);
+      bottom: 0;
+      left: 0;
+      z-index: 31;
+      width: min(var(--rail), 85vw);
+      height: auto;
+      transform: translateX(-100%);
+      transition: transform var(--dur) var(--ease);
+    }
+
+    .topbar__link--icon {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    body.is-rail-open .sidebar {
+      transform: translateX(0);
+    }
+
+    body.is-rail-open::before {
+      content: "";
+      position: fixed;
+      inset: var(--nav-h) 0 0 0;
+      z-index: 30;
+      background: rgb(0 0 0 / .4);
+    }
+
+    .work {
+      padding: .75rem;
+    }
+
+    #files-page {
+      min-height: calc(var(--h-body) - 1.5rem);
+    }
+
+    .work__toolbar {
+      align-items: flex-start;
+    }
+  }
+}

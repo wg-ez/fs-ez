@@ -1,0 +1,96 @@
+@layer base {
+  :root {
+    --bg: light-dark(#f2f1ee, #0a0a0b);
+    --bg-raised: light-dark(#faf9f7, #101014);
+    --bg-sunken: light-dark(#e9e8e4, #060607);
+    --ink: light-dark(#101014, #f2f1ee);
+    --ink-strong: light-dark(#000, #fff);
+    --muted: light-dark(#1010149e, #f2f1ee9e);
+    --faint: light-dark(#10101499, #f2f1ee99);
+    --line: light-dark(#10101429, #f2f1ee29);
+    --line-strong: light-dark(#10101466, #f2f1ee66);
+    --app: light-dark(#2653e4, #1e4fa8);
+    --app-ink: light-dark(#2653e4, #8fb8ff);
+    --danger: light-dark(#b3261e, #ff6259);
+    --ok: light-dark(#2653e4, #8fb8ff);
+    --nav-h: 3rem;
+    --h-body: calc(100dvh - var(--nav-h));
+    --rail: 17rem;
+    --ease: cubic-bezier(.4, 0, .2, 1);
+    --dur: .15s;
+    --tag-neutral: #a3a29c;
+    --tag-red: light-dark(#ff6c65, #ef7a72);
+    --tag-orange: light-dark(#fd8c0a, #e59a5e);
+    --tag-amber: light-dark(#e5b400, #ddb64d);
+    --tag-green: light-dark(#4bc15e, #76b87c);
+    --tag-teal: light-dark(#0dc0af, #62b8ac);
+    --tag-cyan: light-dark(#10bae2, #64b5cf);
+    --tag-blue: light-dark(#8fb8fe, #8fb8ff);
+    --tag-indigo: light-dark(#989bff, #9a9ef0);
+    --tag-violet: light-dark(#ba88ff, #b492e8);
+    --tag-pink: light-dark(#fd67b6, #e084b0);
+    --tag-brown: light-dark(#d5934d, #c39a72);
+    color-scheme: light;
+  }
+
+  /* light-dark() resout selon color-scheme herite, une seule source pour les deux themes. */
+  html[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  html[data-theme="system"] {
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html[data-theme="system"] {
+      color-scheme: dark;
+    }
+  }
+
+  body {
+    min-height: 100dvh;
+    overflow-x: clip;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: .9375rem;
+    line-height: 1.45;
+  }
+
+  button,
+  summary {
+    cursor: pointer;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 0;
+  }
+
+  :where(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  /* les champs texte marquent le focus par leur bord, jamais par l'anneau global */
+  :where(input, textarea):focus-visible {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

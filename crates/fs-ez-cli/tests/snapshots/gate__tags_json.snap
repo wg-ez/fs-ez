@@ -1,0 +1,23 @@
+---
+source: crates/fs-ez-cli/tests/gate.rs
+expression: "normalized(&fixture, &[\"tags\"])"
+---
+{
+  "schema": 1,
+  "tags": [
+    {
+      "color": "neutral",
+      "count": 1,
+      "id": "[id]",
+      "name": "alpha",
+      "name_norm": "alpha"
+    },
+    {
+      "color": "neutral",
+      "count": 1,
+      "id": "[id]",
+      "name": "beta",
+      "name_norm": "beta"
+    }
+  ]
+}

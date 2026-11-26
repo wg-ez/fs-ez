@@ -1,0 +1,64 @@
+{% macro menu_link(active, q, prefix, suffix, label, lang = "") %}      <li role="none"><a class="dropdown__item{% if active %} is-on{% endif %}" role="menuitem" href="?{{ q }}{{ prefix }}&amp;{{ suffix }}"{% if !lang.is_empty() %} lang="{{ lang }}"{% endif %}{% if active %} aria-current="true"{% endif %}>{{ label }}</a></li>
+{%- endmacro -%}
+{% let expand_label = base.t("topbar.expand") %}{% let collapse_label = base.t("topbar.collapse") %}<button class="icon-btn topbar__toggle js-rail-toggle" type="button" title="{% if base.collapsed %}{{ expand_label }}{% else %}{{ collapse_label }}{% endif %}" aria-label="{% if base.collapsed %}{{ expand_label }}{% else %}{{ collapse_label }}{% endif %}" aria-controls="sidebar" aria-expanded="{% if base.collapsed %}false{% else %}true{% endif %}" data-label-expand="{{ expand_label }}" data-label-collapse="{{ collapse_label }}">
+  <span aria-hidden="true">☰</span>
+</button>
+<a class="topbar__brand" href="/">
+  <svg class="topbar__glyph" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+    <g fill="currentColor">
+      <rect x="7" y="7" width="10" height="10"/>
+      <rect x="47" y="7" width="10" height="10"/>
+      <rect x="7" y="47" width="10" height="10"/>
+      <rect x="12" y="10" width="40" height="4"/>
+      <rect x="10" y="12" width="4" height="40"/>
+      <rect x="39" y="30" width="15" height="4"/>
+      <rect x="50" y="12" width="4" height="20"/>
+      <rect x="12" y="50" width="20" height="4"/>
+      <rect x="30" y="39" width="4" height="15"/>
+    </g>
+    <rect x="25" y="25" width="14" height="14" fill="#2653e4"/>
+  </svg>
+  <span>fs-ez</span>
+</a>
+<form class="topbar__search" method="get" action="/" role="search">
+  <label class="sr-only" for="global-search">{{ base.t("shell.search") }}</label>
+  <input class="searchbar__input" id="global-search" type="search" name="q" value="{{ q }}" placeholder="{{ base.t("shell.search") }}" autocomplete="off">
+  {% for field in base.search_fields %}
+  <input type="hidden" name="{{ field.name }}" value="{{ field.value }}" data-search-preserve>
+  {% endfor %}
+  <button class="sr-only" type="submit">{{ base.t("shell.search") }}</button>
+  {% include "partials/search_filter.html" %}
+</form>
+<nav class="topbar__actions" aria-label="{{ base.t("shell.actions") }}">
+  <details class="dropdown">
+    {% let appearance_label = base.t("shell.appearance") %}<summary class="topbar__link topbar__link--icon" title="{{ appearance_label }}" aria-label="{{ appearance_label }}" aria-haspopup="menu">
+      <svg class="topbar__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 3v18" />
+        <path d="M12 3a9 9 0 0 1 0 18" />
+      </svg>
+    </summary>
+    <div class="dropdown__panel dropdown__panel--wide">
+      <p class="dropdown__group">{{ base.t("shell.theme") }}</p>
+      <ul role="menu">
+{{ menu_link(base.theme == "system", query, "theme=system", "lang=" ~ base.lang, base.t("theme.system")) }}
+{{ menu_link(base.theme == "light", query, "theme=light", "lang=" ~ base.lang, base.t("theme.light")) }}
+{{ menu_link(base.theme == "dark", query, "theme=dark", "lang=" ~ base.lang, base.t("theme.dark")) }}
+      </ul>
+      <p class="dropdown__group">{{ base.t("shell.language") }}</p>
+      <ul role="menu">
+{{ menu_link(base.lang == "en", query, "lang=en", "theme=" ~ base.theme, "EN", lang = "en") }}
+{{ menu_link(base.lang == "fr", query, "lang=fr", "theme=" ~ base.theme, "FR", lang = "fr") }}
+      </ul>
+    </div>
+  </details>
+  {% let settings_label = base.t("settings.title") %}<a class="topbar__link topbar__link--icon" href="/settings" title="{{ settings_label }}" aria-label="{{ settings_label }}">
+    <svg class="topbar__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="3" />
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+    </svg>
+  </a>
+  <form class="logout" method="post" action="/logout">
+    <button class="topbar__link" type="submit">{{ base.t("shell.logout") }}</button>
+  </form>
+</nav>

@@ -1,0 +1,20 @@
+[package]
+name = "fs-ez-fs"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+fs-ez-core = { workspace = true }
+libc = { workspace = true }
+time = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+fs-ez-test-support = { workspace = true }
+tempfile = { workspace = true }

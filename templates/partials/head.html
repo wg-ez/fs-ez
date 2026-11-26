@@ -1,0 +1,10 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+{% if head_scripts %}  <meta name="htmx-config" content='{"includeIndicatorStyles":false}'>
+{% endif %}  <title>{{ head_title }}</title>
+  <link rel="icon" href="/static/img/favicon.svg?v={{ head_asset_version }}" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/css/app.css?v={{ head_asset_version }}">
+{% if head_scripts %}{% for script in ["/static/vendor/htmx.min.js", "/static/js/dom.js", "/static/js/work.js", "/static/js/search.js", "/static/js/app/sidebar.js", "/static/js/app/dropdowns.js", "/static/js/app/columns.js", "/static/js/app/file-menu.js", "/static/js/app/dragdrop.js", "/static/js/app/folders.js", "/static/js/app/scroll.js", "/static/js/app/events.js", "/static/js/app.js", "/static/js/views.js"] %}{% if loop.first %}  <script src="{{ script }}" defer></script>
+{% else %}  <script src="{{ script }}?v={{ head_asset_version }}" defer></script>
+{% endif %}{% endfor %}{% endif %}</head>

@@ -1,0 +1,3 @@
+<aside class="sidebar" id="sidebar"{% if sidebar_oob %} hx-swap-oob="outerHTML"{% endif %} aria-label="{{ base.t("nav.label") }}" hx-get="/partials/sidebar" hx-trigger="data-changed from:body, inbox-changed from:body, tags-changed from:body, groups-changed from:body, views-changed from:body" hx-swap="outerHTML">
+  {% include "partials/sidebar_body.html" %}
+</aside>

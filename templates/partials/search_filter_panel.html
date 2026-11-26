@@ -1,0 +1,5 @@
+{% import "partials/ui.html" as ui %}
+<div class="searchbar__panel dropdown__panel dropdown__panel--wide">
+  <button class="searchbar__all dropdown__item{% if !base.has_search_tags() %} is-on{% endif %}" type="submit" name="tag" value="">{{ base.t("shell.search_all_tags") }}</button>
+{{ ui::tag_menu(base, sidebar.groups, "tag", exclude_name = "not_tag") }}
+</div>

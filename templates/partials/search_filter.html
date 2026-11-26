@@ -1,0 +1,7 @@
+<details class="searchbar__filters dropdown" data-search-filter-url="/partials/search_filter">
+  <summary class="searchbar__toggle" title="{{ base.t("shell.search_filters") }}" aria-label="{{ base.t("shell.search_filters") }}">
+    <svg class="searchbar__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 3h12L9.5 8.2V13l-3 1.5V8.2z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"></path></svg>
+    <span class="searchbar__badge" aria-hidden="true"{% if !base.has_search_tags() %} hidden{% endif %}>{{ base.search_tag_count() }}</span>
+  </summary>
+  {% include "partials/search_filter_panel.html" %}
+</details>

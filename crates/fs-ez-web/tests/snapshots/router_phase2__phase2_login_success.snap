@@ -1,0 +1,7 @@
+---
+source: crates/fs-ez-web/tests/router_phase2.rs
+expression: summary
+---
+status: 303
+location: /
+set-cookie: fs-ez_session=[token]; HttpOnly; SameSite=Lax; Secure; Path=/; Max-Age=2592000

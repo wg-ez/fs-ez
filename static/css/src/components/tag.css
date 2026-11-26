@@ -1,0 +1,23 @@
+@layer components {
+  /* ---------------------------------------------------------------- tag -- */
+  .tag-pill {
+    gap: .3rem;
+    max-width: 100%;
+    padding: .05rem .4rem;
+    border: 1px solid var(--tag-color, var(--tag-neutral));
+    background: color-mix(in srgb, var(--tag-color, var(--tag-neutral)) 18%, transparent);
+    color: var(--ink);
+    line-height: 1.35;
+    letter-spacing: .02em;
+  }
+
+  .tag-pill[draggable="true"] {
+    cursor: grab;
+  }
+
+  .tag-pill[data-remove-tag] {
+    cursor: pointer;
+    user-select: none;
+  }
+
+}

@@ -1,0 +1,41 @@
+{% macro col_th(header, resize, hint) %}        <th data-col="{{ header.key }}"{% if header.sortable %} aria-sort="{{ header.aria_sort }}"{% endif %}>{% if header.sortable %}<a class="table__sort{% if header.active %} is-on{% endif %}" href="{{ header.url }}" hx-get="{{ header.url }}" hx-target="#work" hx-select="#work" hx-swap="outerHTML" hx-push-url="true" title="{{ header.label }}">{{ header.label }}{% if header.active %} <span aria-hidden="true">{{ header.arrow }}</span>{% endif %}</a>{% else %}{{ header.label }}{% endif %}<button class="table__resizer" type="button" data-col-resizer aria-label="{{ resize }}" title="{{ hint }}"></button></th>
+{%- endmacro -%}
+{% macro spacer(group, position) %}    <tbody class="files-spacer" data-{{ group }}-spacer="{{ position }}"><tr><td colspan="4"></td></tr></tbody>
+{%- endmacro -%}
+<div class="table-wrap files-surface">
+  <table class="table" data-col-resizable data-col-key="files" data-files-table>
+    <thead>
+      <tr>
+{%- for header in files.sort_headers %}
+{{ col_th(header, files.labels.resize, files.labels.resize_hint) }}{% endfor %}
+      </tr>
+    </thead>
+{% match files.virtual_folders %}
+{% when Some with (folders) %}
+    <tbody data-folder-static>
+{% include "partials/folder_static_rows.html" %}
+    </tbody>
+{{ spacer("folder", "top") }}
+    <tbody data-folder-rows data-folder-total="{{ folders.total }}" data-folder-rows-url="{{ folders.rows_url }}">
+{% include "partials/folder_rows.html" %}
+    </tbody>
+{{ spacer("folder", "bottom") }}
+{% when None %}
+{% endmatch %}
+{{ spacer("files", "top") }}
+    <tbody data-files-rows>
+{% include "partials/file_rows.html" %}
+    </tbody>
+{{ spacer("files", "bottom") }}
+  </table>
+  {% if files.rows.is_empty() %}
+  {% match files.virtual_folders %}
+  {% when Some with (folders) %}
+  {% if folders.total == 0 %}
+  <p class="empty__text files-empty">{{ files.labels.empty }}</p>
+  {% endif %}
+  {% when None %}
+  <p class="empty__text files-empty">{{ files.labels.empty }}</p>
+  {% endmatch %}
+  {% endif %}
+</div>

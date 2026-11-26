@@ -1,0 +1,1 @@
+{% macro pills(row) %}{% for tag in row.tags.iter() %}<span class="tag-pill tag-pill--{{ tag.color }}" data-remove-tag data-file-id="{{ row.id }}" data-tag-label="{{ tag.name }}">{{ tag.name }}</span>{% endfor %}{% endmacro %}

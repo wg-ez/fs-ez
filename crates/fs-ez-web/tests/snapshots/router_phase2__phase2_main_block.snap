@@ -1,0 +1,82 @@
+---
+source: crates/fs-ez-web/tests/router_phase2.rs
+expression: main
+---
+<main class="work" id="work">
+<div id="files-page" data-file-drop-zone data-scope-url="/?sort=id%3Aasc" data-rows-url="/partials/files/rows?sort=id%3Aasc" data-total="3" data-loading="Loading files" data-drop-error="Something went wrong" hx-get="/partials/files_page?sort=id%3Aasc" hx-trigger="data-changed from:body, inbox-changed from:body, files-changed from:body" hx-target="#files-page" hx-swap="outerHTML" hx-select="#files-page">
+<div class="table-wrap files-surface">
+  <table class="table" data-col-resizable data-col-key="files" data-files-table>
+    <thead>
+      <tr>
+        <th data-col="name" aria-sort="none"><a class="table__sort" href="/?sort=name%3Aasc" hx-get="/?sort=name%3Aasc" hx-target="#work" hx-select="#work" hx-swap="outerHTML" hx-push-url="true" title="Name">Name</a><button class="table__resizer" type="button" data-col-resizer aria-label="Resize column" title="Drag to resize, double-click to reset"></button></th>
+        <th data-col="tags">Tags<button class="table__resizer" type="button" data-col-resizer aria-label="Resize column" title="Drag to resize, double-click to reset"></button></th>
+        <th data-col="size" aria-sort="none"><a class="table__sort" href="/?sort=size%3Aasc" hx-get="/?sort=size%3Aasc" hx-target="#work" hx-select="#work" hx-swap="outerHTML" hx-push-url="true" title="Size">Size</a><button class="table__resizer" type="button" data-col-resizer aria-label="Resize column" title="Drag to resize, double-click to reset"></button></th>
+        <th data-col="date" aria-sort="none"><a class="table__sort" href="/?sort=mtime%3Aasc" hx-get="/?sort=mtime%3Aasc" hx-target="#work" hx-select="#work" hx-swap="outerHTML" hx-push-url="true" title="Date">Date</a><button class="table__resizer" type="button" data-col-resizer aria-label="Resize column" title="Drag to resize, double-click to reset"></button></th>
+      </tr>
+    </thead>
+
+
+    <tbody class="files-spacer" data-files-spacer="top"><tr><td colspan="4"></td></tr></tbody>
+    <tbody data-files-rows>
+
+      
+      <tr class="table__row" data-file-drop data-file-id="[id]" data-file-kind="file">
+        <td class="table__name">
+          <span class="table__name-link">Rapport-annuel.txt</span>
+          <form class="table__rename" method="post" action="/partials/files/[id]/rename" hx-post="/partials/files/[id]/rename" hx-target="#toast" hx-swap="innerHTML" data-file-rename hidden>
+            <input class="input" type="text" name="name" value="Rapport-annuel.txt" maxlength="255" autocomplete="off" spellcheck="false" aria-label="Rename" required>
+            <button class="sr-only" type="submit">Rename</button>
+          </form>
+        </td>
+        <td class="table__tags"><span class="table__tags-list" id="file-tags-[id]"><span class="tag-pill tag-pill--neutral" data-remove-tag data-file-id="[id]" data-tag-label="facture">facture</span></span></td>
+        <td><span class="table__text">5 o</span></td>
+        <td><span class="table__text">[date]</span></td>
+      </tr>
+      
+      <tr class="table__row" data-file-drop data-file-id="[id]" data-file-kind="file">
+        <td class="table__name">
+          <span class="table__name-link">facture-02.txt</span>
+          <form class="table__rename" method="post" action="/partials/files/[id]/rename" hx-post="/partials/files/[id]/rename" hx-target="#toast" hx-swap="innerHTML" data-file-rename hidden>
+            <input class="input" type="text" name="name" value="facture-02.txt" maxlength="255" autocomplete="off" spellcheck="false" aria-label="Rename" required>
+            <button class="sr-only" type="submit">Rename</button>
+          </form>
+        </td>
+        <td class="table__tags"><span class="table__tags-list" id="file-tags-[id]"><span class="tag-pill tag-pill--neutral" data-remove-tag data-file-id="[id]" data-tag-label="archive">archive</span></span></td>
+        <td><span class="table__text">2 o</span></td>
+        <td><span class="table__text">[date]</span></td>
+      </tr>
+      
+      <tr class="table__row" data-file-drop data-file-id="[id]" data-file-kind="file">
+        <td class="table__name">
+          <span class="table__name-link">notes.txt</span>
+          <form class="table__rename" method="post" action="/partials/files/[id]/rename" hx-post="/partials/files/[id]/rename" hx-target="#toast" hx-swap="innerHTML" data-file-rename hidden>
+            <input class="input" type="text" name="name" value="notes.txt" maxlength="255" autocomplete="off" spellcheck="false" aria-label="Rename" required>
+            <button class="sr-only" type="submit">Rename</button>
+          </form>
+        </td>
+        <td class="table__tags"><span class="table__tags-list" id="file-tags-[id]"></span></td>
+        <td><span class="table__text">1 o</span></td>
+        <td><span class="table__text">[date]</span></td>
+      </tr>
+      
+    </tbody>
+    <tbody class="files-spacer" data-files-spacer="bottom"><tr><td colspan="4"></td></tr></tbody>
+  </table>
+  
+</div>
+<p class="files-status sr-only" role="status" data-files-status></p>
+</div>
+<div class="dropdown__panel context-menu" id="file-context-menu" role="menu" aria-label="File actions" data-delete-error="Delete failed" hidden>
+
+
+  <button class="dropdown__item" type="button" role="menuitem" data-file-action="rename" data-disabled-title="Select one file to rename">Rename</button>
+
+
+
+
+  <button class="dropdown__item dropdown__item--danger" type="button" role="menuitem" data-file-action="delete">Delete</button>
+
+
+</div>
+<div id="toast" aria-live="polite"></div>
+</main>

@@ -1,0 +1,162 @@
+@layer components {
+  /* ----------------------------------------------------- view editor -- */
+  .sidebar__view-editor {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: .5rem;
+    min-width: 0;
+    padding: .55rem;
+    border: 1px solid var(--line);
+    background: var(--bg-raised);
+  }
+
+  /* Éditeur de création inséré dans la liste du groupe : même indentation que les vues. */
+  .sidebar__view-create-slot {
+    list-style: none;
+  }
+
+  .sidebar__view-create-slot[hidden] {
+    display: none;
+  }
+
+  .sidebar__view-create-slot .sidebar__view-create-panel {
+    margin: .2rem 0 .3rem;
+  }
+
+  .sidebar__view-editor .input {
+    min-height: 1.9rem;
+    padding: .2rem .4rem;
+    font-size: .75rem;
+  }
+
+  .sidebar__view-editor__head,
+  .sidebar__view-editor__row,
+  .sidebar__view-editor__actions {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    min-width: 0;
+  }
+
+  .sidebar__view-editor__head .input,
+  .sidebar__view-editor__row > .input,
+  .sidebar__view-editor__row > .dropdown {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .sidebar__row:has(> .sidebar__view-editor:not([hidden])) {
+    flex-wrap: wrap;
+  }
+
+  .sidebar__row > .sidebar__view-editor {
+    flex: 1 0 100%;
+    margin-top: .15rem;
+  }
+
+  .sidebar__view-editor__section {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    margin-top: .1rem;
+    padding-top: .45rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .sidebar__view-editor__section .micro-label {
+    margin: 0;
+  }
+
+  .sidebar__view-editor__colors {
+    display: flex;
+  }
+
+  /* Radios de l'editeur : la pastille cochee reprend le contour de la swatch active. */
+  .sidebar__view-editor .sidebar__tag-swatch:has(input:checked) {
+    border-color: var(--ink);
+  }
+
+  .sidebar__view-editor__actions {
+    justify-content: flex-end;
+    padding-top: .45rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .sidebar__view-editor__head [data-view-editor-close] {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .sidebar__view-editor .builder {
+    max-width: none;
+    gap: .45rem;
+  }
+
+  .sidebar__tag-edit {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* Palette et pastilles sur une seule ligne, largeur repartie sur toute la sidebar. */
+  .sidebar__tag-edit--colors,
+  .sidebar__view-editor__colors {
+    flex-wrap: nowrap;
+    gap: .2rem;
+    min-width: 0;
+  }
+
+  .sidebar .sidebar__tag-swatch {
+    width: .9rem;
+    height: .9rem;
+    padding: 0;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+
+  .sidebar .sidebar__tag-swatch:hover,
+  .sidebar .sidebar__tag-swatch.is-on {
+    border-color: var(--ink);
+  }
+
+  .sidebar :is(.sidebar__tag-edit--colors, .sidebar__view-editor__colors) .sidebar__tag-swatch {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .dropdown__panel form {
+    margin: 0;
+  }
+
+  .sidebar .sidebar__error {
+    margin: .35rem .5rem;
+    font-size: .75rem;
+  }
+
+  .sidebar__group-head[draggable="true"] {
+    cursor: grab;
+  }
+
+  .sidebar__group-head[draggable="true"]:active {
+    cursor: grabbing;
+  }
+
+  .sidebar__row.is-dragging,
+  .sidebar__group-row.is-dragging {
+    opacity: .45;
+  }
+
+  .sidebar__row.is-drop-before,
+  .sidebar__group-row.is-drop-before {
+    box-shadow: inset 0 2px 0 var(--ink);
+  }
+
+  .sidebar__row.is-drop-after,
+  .sidebar__group-row.is-drop-after {
+    box-shadow: inset 0 -2px 0 var(--ink);
+  }
+
+}

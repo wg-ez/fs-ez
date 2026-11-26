@@ -1,0 +1,20 @@
+{% import "partials/ui.html" as ui %}
+<li class="sidebar__row sidebar__row--{{ tag.color }}{% if base.is_active_tag(tag.name) %} is-on{% endif %}{% if base.is_search_excluded(tag.name) %} is-excluded{% endif %}" data-tag-row data-tag-id="{{ tag.id }}">
+  <a class="sidebar__link" href="{{ base.sort_href("/?tag=" ~ tag.name) }}" draggable="true" data-tag="{{ tag.name }}" title="{{ tag.name }}" aria-label="{{ tag.name }}">
+    {% call ui::tag_dot(tag.color) %}{% endcall %}
+    <span class="sidebar__name" data-tag-name>{{ tag.name }}</span>
+  </a>
+  <div class="sidebar__actions">
+    {% call ui::action_menu("tag", base.t("tags.actions")) %}
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="name">{{ base.t("tags.rename") }}</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-tag-edit-open="color">{{ base.t("tags.change_color") }}</button></li>
+{{ ui::dropdown_delete("/partials/tags", tag.id, base.t("tags.delete_confirm"), base.t("tags.delete"), "        ") }}
+    {% endcall %}
+  </div>
+  <form class="sidebar__tag-edit" method="post" action="/partials/tags/{{ tag.id }}/rename" hx-post="/partials/tags/{{ tag.id }}/rename" hx-target="#sidebar" hx-swap="none" data-tag-edit="name" hidden>
+    <label class="sr-only" for="sidebar-tag-name-{{ tag.id }}">{{ base.t("tags.column.name") }}</label>
+    {% call ui::tag_dot(tag.color) %}{% endcall %}
+    <input class="input" id="sidebar-tag-name-{{ tag.id }}" name="name" value="{{ tag.name }}" maxlength="64" required autocomplete="off">
+  </form>
+{{ ui::color_edit_form(base, "  ", "sidebar__tag-edit sidebar__tag-edit--colors", "/partials/tags/" ~ tag.id ~ "/color", "tag", tag.colors()) }}
+</li>

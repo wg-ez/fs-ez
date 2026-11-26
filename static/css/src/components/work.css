@@ -1,0 +1,105 @@
+@layer components {
+  /* --------------------------------------------------------------- work -- */
+  .work {
+    min-width: 0;
+    padding: 1.5rem;
+  }
+
+  .work__toolbar {
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-bottom: 1rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* Liste pleine hauteur : le clic droit sous les fichiers ouvre le menu contextuel. */
+  #files-page {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(var(--h-body) - 3rem);
+  }
+
+  #files-page > .files-surface {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .table__row--create {
+    background: var(--bg-raised);
+  }
+
+  .table__row--create[hidden] {
+    display: none;
+  }
+
+  .files-empty {
+    padding: 2rem 0;
+  }
+
+  .drop-target,
+  [data-file-drop],
+  [data-folder-drop] {
+    outline: 1px dashed transparent;
+    outline-offset: -2px;
+  }
+
+  /* Fond hors transition de base : un swap complet réapplique is-selected après le calcul de style et ferait clignoter la sélection. */
+  [data-file-drop],
+  [data-folder-drop] {
+    transition: outline-color .12s ease;
+  }
+
+  .drop-target.is-drop,
+  [data-file-drop].is-drop,
+  [data-folder-drop].is-drop,
+  [data-file-drop-zone].is-drop {
+    outline-color: var(--app);
+    background: color-mix(in srgb, var(--app) 12%, transparent);
+  }
+
+  [data-file-drop].is-drop,
+  [data-folder-drop].is-drop {
+    transition: background-color .12s ease, outline-color .12s ease;
+  }
+
+  .breadcrumb {
+    flex-wrap: wrap;
+    gap: .4rem;
+    min-width: 0;
+    font-size: .8125rem;
+    line-height: 1.5;
+    letter-spacing: .04em;
+    color: var(--muted);
+  }
+
+  .breadcrumb a {
+    color: var(--app-ink);
+  }
+
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .breadcrumb__separator {
+    color: var(--faint);
+  }
+
+  .empty {
+    max-width: 34rem;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+    text-align: center;
+  }
+
+  .empty__title {
+    margin: 0 0 .5rem;
+  }
+
+  .empty__text {
+    max-width: 46ch;
+    margin: 0 auto;
+    color: var(--muted);
+  }
+
+}

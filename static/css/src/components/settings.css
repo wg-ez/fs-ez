@@ -1,0 +1,187 @@
+@layer components {
+  /* ----------------------------------------------------------- settings -- */
+  .settings {
+    display: grid;
+    grid-template-columns: minmax(15rem, 20rem) minmax(0, 1fr);
+    align-items: start;
+    gap: 1.25rem;
+    max-width: 88rem;
+  }
+
+  .settings__page-title {
+    margin: 0 0 .25rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .settings__page-intro {
+    max-width: 70ch;
+    margin: 0 0 1rem;
+    color: var(--muted);
+  }
+
+  .settings__side,
+  .settings__main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .settings__main {
+    min-width: 0;
+  }
+
+  .settings__panel {
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--line);
+    background: var(--bg-raised);
+  }
+
+  .settings .micro-label {
+    margin: 0 0 .75rem;
+  }
+
+  .settings__form {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+
+  .settings__save {
+    align-self: flex-start;
+    margin-top: .25rem;
+  }
+
+  .settings__button-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .75rem;
+    margin-top: .75rem;
+  }
+
+  .settings__hint {
+    max-width: 70ch;
+    margin: 0 0 .75rem;
+    color: var(--faint);
+    font-size: .75rem;
+  }
+
+  .settings__secret {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .3rem;
+    margin: 0 0 1rem;
+  }
+
+  .settings__secret-title,
+  .settings__secret-hint {
+    margin: 0;
+  }
+
+  .settings__secret-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+    max-width: 100%;
+  }
+
+  .settings__secret-copy {
+    flex: none;
+    min-height: 1.9rem;
+    padding: .2rem .55rem;
+    font-size: .6875rem;
+  }
+
+  .settings__secret-value {
+    max-width: 100%;
+    padding: .35rem .5rem;
+    border: 1px solid var(--line-strong);
+    background: var(--bg-sunken);
+    font-family: var(--font-mono);
+    font-size: .8125rem;
+    overflow-wrap: anywhere;
+    user-select: all;
+  }
+
+  /* padding + gap identiques pour le formulaire jeton */
+  .settings__token-form {
+    display: grid;
+    align-items: end;
+    gap: .75rem;
+    margin: 0 0 1rem;
+    padding: .85rem;
+    border: 1px solid var(--line);
+    background: var(--bg);
+  }
+
+  .settings__token-form {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) auto;
+  }
+
+  .settings__table {
+    table-layout: fixed;
+  }
+
+  .settings__table th,
+  .settings__table td {
+    padding-inline: .9rem;
+    text-align: left;
+  }
+
+  /* largeurs des colonnes du tableau des jetons : libellés alignés verticalement */
+  .settings__table :is(th, td):nth-child(1) {
+    width: 15.05%;
+  }
+
+  .settings__table :is(th, td):nth-child(2) {
+    width: 28.93%;
+  }
+
+  .settings__table :is(th, td):nth-child(3) {
+    width: 19.67%;
+  }
+
+  .settings__table :is(th, td):nth-child(4) {
+    width: 18.35%;
+  }
+
+  .settings__table :is(th, td):nth-child(5) {
+    width: 18%;
+  }
+
+  .settings__row-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .35rem;
+  }
+
+  .settings__row-actions form {
+    margin: 0;
+  }
+
+  .settings__action {
+    min-height: 1.9rem;
+    padding: .2rem .55rem;
+    font-size: .6875rem;
+  }
+
+  @media (max-width: 74.999rem) {
+    .settings {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 47.999rem) {
+    .settings__token-form {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .settings__table :is(th, td):nth-child(2) {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{% import "partials/ui.html" as ui %}
+      {% for folder in folders.folders %}
+      <tr class="table__row" data-folder-row="{{ folder.id }}" data-folder-drop="{{ folder.id }}" draggable="true" title="{{ folders.labels.drop_hint }}">
+        <td class="table__name">
+          {% call ui::folder_link(folder.url) %}{% call ui::folder() %}{% endcall %}{{ folder.name }}{% endcall %}
+          <form class="table__rename" method="post" action="{{ folder.rename_action }}" hx-post="{{ folder.rename_action }}" hx-target="#toast" hx-swap="innerHTML" data-folder-rename hidden>
+            <label class="sr-only" for="virtual-folder-rename-{{ folder.id }}">{{ folders.labels.folder_name }}</label>
+            <input class="input" id="virtual-folder-rename-{{ folder.id }}" name="name" value="{{ folder.name }}" maxlength="255" required autocomplete="off" spellcheck="false">
+            <button class="sr-only" type="submit">{{ folders.labels.rename }}</button>
+          </form>
+        </td>
+{{ ui::folder_empty_cells() }}
+      </tr>
+      {% endfor %}

@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "description": "fs-ez — seule dep npm: @tailwindcss/cli.",
+  "dependencies": {
+    "@tailwindcss/cli": "latest"
+  }
+}

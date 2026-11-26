@@ -1,0 +1,19 @@
+{% import "partials/ui.html" as ui %}
+{% macro row(key, group_value, draft, message, label, placeholder, color) %}
+<li class="sidebar__row sidebar__row--create">
+  <form class="sidebar__tag-create" method="post" action="/partials/tags" hx-post="/partials/tags" hx-target="#sidebar" hx-swap="none" data-group-tag-form{% if message.is_none() %} hidden{% endif %}>
+    <input type="hidden" name="group" value="{{ group_value }}">
+    <input type="hidden" name="color" value="{{ color }}">
+    <label class="sr-only" for="sidebar-tag-create-{{ key }}">{{ label }}</label>
+    <span class="sidebar__link">
+      {% call ui::tag_dot(color) %}{% endcall %}
+      <input class="input sidebar__name sidebar__name--input" id="sidebar-tag-create-{{ key }}" name="name" value="{{ draft }}" maxlength="64" required autocomplete="off" placeholder="{{ placeholder }}"{% if message.is_some() %} aria-invalid="true"{% endif %}>
+    </span>
+    {% match message %}
+    {% when Some with (text) %}
+    <p class="alert sidebar__error" role="alert">{{ text }}</p>
+    {% when None %}
+    {% endmatch %}
+  </form>
+</li>
+{% endmacro %}

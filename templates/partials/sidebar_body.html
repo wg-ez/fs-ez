@@ -1,0 +1,55 @@
+{% import "partials/ui.html" as ui %}
+{% import "partials/sidebar_tag_create.html" as tag_create %}
+  <div class="sidebar__nav">
+    <section class="sidebar__section">
+      <ul class="sidebar__list">
+{{ ui::nav_link("files", base.active, base.sort_href("/"), base.t("nav.all")) }}
+{{ ui::nav_link("untagged", base.active, base.sort_href("/?filter=untagged"), base.t("nav.untagged")) }}
+{{ ui::nav_link("recent", base.active, base.sort_href("/?filter=recent"), base.t("nav.recent")) }}
+{{ ui::nav_link("recent-files", base.active, base.sort_href("/?filter=recent-files"), base.t("nav.recent_files")) }}
+{{ ui::nav_link("virtual-folders", base.active, base.sort_href("/virtual-folders"), base.t("nav.virtual_folders")) }}
+      </ul>
+    </section>
+
+    <section class="sidebar__section">
+      <div class="sidebar__section-head">
+        <p class="sidebar__label">{{ base.t("nav.views") }}</p>
+        {% call ui::action_plus(base.t("views.create_group")) %}data-view-group-create-open{% endcall %}
+      </div>
+{{ ui::group_create_form(base, "view-group", "/partials/view-groups", sidebar.view_group_create_color, sidebar.view_group_create_draft(), sidebar.view_group_create_message(), base.t("views.new_group")) }}
+      <div class="sidebar__view-create-panel" data-view-create-panel>
+{{ ui::view_editor(base, "/views", "create", sidebar.view_create_draft(), "", sidebar.view_create_filter(), sidebar.groups, sidebar.view_create_colors(), sidebar.view_create_message().unwrap_or_default(), create = true, group = sidebar.view_create_group()) }}
+      </div>
+      {% if !sidebar.view_groups.is_empty() %}
+      {% for group in sidebar.view_groups %}
+      {% call ui::group_row("view-group", "/partials/view-groups", group, base, base.t("views.new"), base.t("views.group_actions"), base.t("views.delete_group_confirm")) %}
+            <li class="sidebar__view-create-slot" data-view-create-slot="{{ group.id }}" hidden></li>
+            {% for view in group.views %}
+            {% include "partials/sidebar_view.html" %}
+            {% endfor %}
+{% endcall %}
+      {% endfor %}
+      {% endif %}
+    </section>
+
+    <section class="sidebar__section">
+      <div class="sidebar__section-head">
+        <p class="sidebar__label">{{ base.t("nav.tags") }}</p>
+        {% call ui::action_plus(base.t("tags.create_group")) %}data-group-create-open{% endcall %}
+      </div>
+{{ ui::group_create_form(base, "group", "/partials/groups", sidebar.group_create_color, sidebar.group_create_draft(), sidebar.group_create_message(), base.t("tags.new_group")) }}
+      {% match sidebar.error %}
+      {% when Some with (message) %}
+      <p class="alert sidebar__error" role="alert">{{ message }}</p>
+      {% when None %}
+      {% endmatch %}
+      {% for group in sidebar.groups %}
+      {% call ui::group_row("group", "/partials/groups", group, base, base.t("tags.create_tag"), base.t("tags.group_actions"), base.t("tags.delete_group_confirm")) %}
+            {% call tag_create::row(group.id, group.id, sidebar.tag_create_draft_for(group.id), sidebar.tag_create_message_for(group.id), base.t("tags.column.name"), base.t("tags.new_tag"), group.tag_create_color) %}{% endcall %}
+            {% for tag in group.tags %}
+            {% include "partials/sidebar_tag.html" %}
+            {% endfor %}
+{% endcall %}
+      {% endfor %}
+    </section>
+  </div>

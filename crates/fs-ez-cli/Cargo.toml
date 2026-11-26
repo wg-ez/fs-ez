@@ -1,0 +1,29 @@
+[package]
+name = "fs-ez-cli"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+fs-ez-app = { workspace = true }
+fs-ez-core = { workspace = true }
+fs-ez-fs = { workspace = true }
+fs-ez-query = { workspace = true }
+fs-ez-store = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+zeroize = { workspace = true }
+
+[dev-dependencies]
+assert_cmd = { workspace = true }
+fs-ez-fingerprint = { workspace = true }
+fs-ez-sqlite = { workspace = true }
+fs-ez-test-support = { workspace = true }
+insta = { workspace = true }
+tempfile = { workspace = true }

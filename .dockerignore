@@ -1,0 +1,11 @@
+.git
+.github
+target
+node_modules
+config
+data
+files
+.env
+.env.*
+*.db*
+*.log

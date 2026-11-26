@@ -1,0 +1,182 @@
+@layer components {
+  /* ----------------------------------------------------------- dropdown -- */
+  .dropdown {
+    position: relative;
+  }
+
+  .sidebar__control,
+  .sidebar__group > summary,
+  .dropdown > summary {
+    list-style: none;
+  }
+
+  .dropdown > summary::marker {
+    content: "";
+  }
+
+  .dropdown > summary:hover,
+  .dropdown[open] > summary {
+    color: var(--ink);
+    background: var(--bg-raised);
+  }
+
+  .dropdown[open] > summary.dropdown__trigger {
+    border-color: var(--ink);
+  }
+
+  .dropdown__panel {
+    position: absolute;
+    top: calc(100% + .35rem);
+    right: 0;
+    z-index: 30;
+    width: max-content;
+    min-width: 10rem;
+    max-width: calc(100vw - 1rem);
+    max-height: min(70vh, 24rem);
+    padding: .35rem;
+    border: 1px solid var(--line-strong);
+    background: var(--bg-raised);
+    box-shadow: 0 .5rem 1.5rem rgb(0 0 0 / .14);
+    overflow-y: auto;
+  }
+
+  .dropdown__panel--field {
+    left: 0;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Select dans un panneau : options hors flux, ancrées au select pour déborder du panneau. */
+  .dropdown__panel .dropdown__panel--field {
+    position: absolute;
+    right: auto;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  /* Panneau contenant un select : sans rognage, sinon les options débordantes sont coupées. */
+  .dropdown__panel:has(.dropdown__panel--field) {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .dropdown__panel--wide {
+    width: 18rem;
+    min-width: 0;
+  }
+
+  .dropdown__group {
+    gap: .35rem;
+    margin: 0;
+    padding: .45rem .4rem .15rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: .6875rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .dropdown__group:not(:first-child) {
+    margin-top: .2rem;
+    padding-top: .6rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .dropdown__item {
+    gap: .4rem;
+    width: 100%;
+    padding: .35rem .4rem;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: .8125rem;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .dropdown__item:hover {
+    background: var(--bg-sunken);
+  }
+
+  :is(.dropdown__item.is-on, .dropdown__item[aria-current="true"], .dropdown__item:has(input:checked)) {
+    background: var(--bg-sunken);
+    box-shadow: inset 2px 0 0 var(--app-ink);
+  }
+
+  :is(.dropdown__item.is-on, .dropdown__item[aria-current="true"], .dropdown__item:has(input:checked))::after {
+    content: "✓";
+    margin-left: auto;
+    color: var(--app-ink);
+    font-family: var(--font-mono);
+  }
+
+  .dropdown__item--danger {
+    color: var(--danger);
+  }
+
+  /* Blacklist de recherche : bord gauche et croix rouges, distincts de la coche d'inclusion. */
+  .dropdown__item--excluded {
+    color: var(--danger);
+    box-shadow: inset 2px 0 0 var(--danger);
+  }
+
+  .dropdown__item--excluded::after {
+    content: "✕";
+    margin-left: auto;
+    color: var(--danger);
+    font-family: var(--font-mono);
+  }
+
+  .dropdown__item:disabled,
+  .dropdown__item:disabled:hover {
+    color: var(--faint);
+    cursor: default;
+    background: transparent;
+  }
+
+  .dropdown__panel.context-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: auto;
+    z-index: 45;
+    min-width: 11rem;
+  }
+
+  .dropdown__panel.context-menu .dropdown__item {
+    padding: .55rem .7rem;
+    font-size: .9375rem;
+  }
+
+  .dropdown__item:focus-visible,
+  .dropdown__item:has(input:focus-visible) {
+    outline: 2px solid var(--ink);
+    outline-offset: -2px;
+  }
+
+  .dropdown__trigger {
+    justify-content: space-between;
+    gap: .5rem;
+    cursor: pointer;
+  }
+
+  .dropdown__trigger.is-disabled,
+  .dropdown__trigger.is-disabled:hover {
+    background: transparent;
+    color: var(--muted);
+    cursor: default;
+  }
+
+  .dropdown__trigger::after {
+    content: "▾";
+    color: var(--muted);
+  }
+
+  .dropdown__value {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+}

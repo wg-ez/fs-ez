@@ -1,0 +1,32 @@
+{% import "partials/ui.html" as ui %}
+<li class="sidebar__row{% match view.color %}{% when Some with (color) %} sidebar__row--{{ color }}{% when None %}{% endmatch %}{% if base.is_active_view(view.id) %} is-on{% endif %}" data-view-row data-view-id="{{ view.id }}">
+  <a class="sidebar__link" href="{{ base.sort_href("/views/" ~ view.id) }}" draggable="true" data-view="{{ view.id }}" title="{{ view.name }}" aria-label="{{ view.name }}">
+    {{ ui::dot_opt("    ", view.color) }}
+    <span class="sidebar__name">{{ view.name }}</span>
+  </a>
+  <div class="sidebar__actions">
+    {% call ui::action_menu("view", base.t("views.actions")) %}
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-view-rename-open>{{ base.t("views.rename") }}</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" data-view-edit-open="color">{{ base.t("tags.change_color") }}</button></li>
+        <li role="none"><button class="dropdown__item" type="button" role="menuitem" hx-get="/partials/views/{{ view.id }}/edit" hx-target="#sidebar" hx-swap="outerHTML">{{ base.t("views.edit") }}</button></li>
+        <li role="none">
+          <form method="post" action="/views/{{ view.id }}/duplicate" hx-post="/views/{{ view.id }}/duplicate" hx-target="#sidebar" hx-swap="none">
+            <button class="dropdown__item" type="submit" role="menuitem">{{ base.t("views.duplicate") }}</button>
+          </form>
+        </li>
+{{ ui::dropdown_delete("/views", view.id, base.t("views.delete_confirm"), base.t("views.delete"), "        ") }}
+    {% endcall %}
+  </div>
+  <form class="sidebar__view-rename" method="post" action="/views/{{ view.id }}/rename" hx-post="/views/{{ view.id }}/rename" hx-target="#sidebar" hx-swap="none" data-view-rename hidden>
+    <label class="sr-only" for="sidebar-view-name-{{ view.id }}">{{ base.t("views.name") }}</label>
+    <input class="input" id="sidebar-view-name-{{ view.id }}" name="name" value="{{ view.name }}" maxlength="100" required autocomplete="off">
+  </form>
+{{ ui::color_edit_form(base, "  ", "sidebar__tag-edit sidebar__tag-edit--colors", "/views/" ~ view.id ~ "/color", "view", view.colors()) }}
+  {% match sidebar.editing_view %}
+  {% when Some with (editing) %}
+  {% if editing.id == view.id %}
+{{ ui::view_editor(base, "/views/" ~ view.id, view.id, view.name, view.sort, view.filter_json, sidebar.groups, view.colors(), open = true) }}
+  {% endif %}
+  {% when None %}
+  {% endmatch %}
+</li>

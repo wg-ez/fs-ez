@@ -1,0 +1,33 @@
+[package]
+name = "fs-ez"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "fs-ez"
+path = "src/main.rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+fs-ez-cli = { workspace = true }
+fs-ez-web = { workspace = true }
+fs-ez-app = { workspace = true }
+fs-ez-sqlite = { workspace = true }
+fs-ez-fs = { workspace = true }
+fs-ez-fingerprint = { workspace = true }
+fs-ez-store = { workspace = true }
+fs-ez-core = { workspace = true }
+axum = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+
+[dev-dependencies]
+fs-ez-test-support = { workspace = true }
+tempfile = { workspace = true }

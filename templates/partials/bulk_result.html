@@ -1,0 +1,5 @@
+{% import "partials/file_tags.html" as file_tags %}
+{% include "partials/toast.html" %}
+{% for row in rows %}
+<span hx-swap-oob="innerHTML:#file-tags-{{ row.id }}">{% call file_tags::pills(row) %}{% endcall %}</span>
+{% endfor %}

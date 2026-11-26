@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="{{ lang }}" data-theme="light" class="no-js">
+{% let head_title = title %}{% let head_asset_version = asset_version %}{% let head_scripts = false %}{% include "partials/head.html" %}
+<body>
+  <main class="login-page">
+    <div class="shell shell--login">
+      <section class="work work--login">
+        <div class="login-card">
+          <div class="topbar__brand">
+            <svg class="topbar__glyph" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+              <g fill="currentColor">
+                <rect x="7" y="7" width="10" height="10"/>
+                <rect x="47" y="7" width="10" height="10"/>
+                <rect x="7" y="47" width="10" height="10"/>
+                <rect x="12" y="10" width="40" height="4"/>
+                <rect x="10" y="12" width="4" height="40"/>
+                <rect x="39" y="30" width="15" height="4"/>
+                <rect x="50" y="12" width="4" height="20"/>
+                <rect x="12" y="50" width="20" height="4"/>
+                <rect x="30" y="39" width="4" height="15"/>
+              </g>
+              <rect x="25" y="25" width="14" height="14" fill="#2653e4"/>
+            </svg>
+            <span>fs-ez</span>
+          </div>
+          <h1 class="login-title">{{ title }}</h1>
+          <p class="settings__hint">{{ intro }}</p>
+          {% match error %}
+          {% when Some with (message) %}
+          <p class="banner banner--error" role="alert">{{ message }}</p>
+          {% when None %}
+          {% endmatch %}
+          <form class="login-form" method="post" action="/setup">
+            <input type="hidden" name="lang" value="{{ lang }}">
+            <label class="field">
+              <span class="field__label">{{ username_label }}</span>
+              <input class="input" type="text" name="username" value="{{ username }}" autocomplete="username" maxlength="64" required autofocus>
+            </label>
+            <label class="field">
+              <span class="field__label">{{ password_label }}</span>
+              <input class="input" type="password" name="password" autocomplete="new-password" minlength="12" required>
+            </label>
+            <button class="btn" type="submit">{{ submit_label }}</button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="{{ base.lang }}" data-theme="{{ base.theme }}" class="no-js">
+{% let head_title = base.title %}{% let head_asset_version = base.asset_version %}{% let head_scripts = true %}{% include "partials/head.html" %}
+<body>
+  <header class="topbar">{% include "partials/chrome.html" %}</header>
+  <div class="shell{% if base.collapsed %} shell--sidebar-hidden{% endif %}">
+    {% include "partials/sidebar.html" %}
+    <main class="work" id="work">{% block content %}{% endblock %}</main>
+  </div>
+</body>
+</html>

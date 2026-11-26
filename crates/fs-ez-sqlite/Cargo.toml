@@ -1,0 +1,25 @@
+[package]
+name = "fs-ez-sqlite"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+fs-ez-store = { workspace = true }
+fs-ez-core = { workspace = true }
+fs-ez-fs = { workspace = true }
+rusqlite = { workspace = true }
+time = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+libc = { workspace = true }
+
+[dev-dependencies]
+fs-ez-query = { workspace = true }
+fs-ez-test-support = { workspace = true }
+tempfile = { workspace = true }

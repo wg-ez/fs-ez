@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "lang": "fr"
+  },
+  "app": {
+    "title": "fs-ez"
+  },
+  "shell": {
+    "search": "Rechercher",
+    "search_filters": "Filtrer par tag",
+    "search_all_tags": "Tous les tags",
+    "search_exclude_hint": "Alt+clic pour exclure",
+    "actions": "Actions globales",
+    "appearance": "Apparence",
+    "theme": "Thème",
+    "language": "Langue",
+    "logout": "Déconnexion",
+    "navigation": "Navigation",
+    "recent_days": "Récemment taggés depuis",
+    "recent_file_days": "Fichiers récents depuis",
+    "page_size": "Taille de page",
+    "default_sort": "Tri par défaut",
+    "backup_retention": "Rétention des sauvegardes",
+    "backup_hour": "Heure de sauvegarde",
+    "days": "jours",
+    "files": "fichiers"
+  },
+  "settings": {
+    "title": "Réglages",
+    "breadcrumb": "Navigation des réglages",
+    "intro": "Navigation, import de l'inbox et clés d'API.",
+    "save": "Enregistrer",
+    "saved": "Réglages enregistrés.",
+    "inbox": "Inbox",
+    "inbox_hint": "Analyser l'inbox maintenant et importer les nouveaux fichiers.",
+    "backup": "Sauvegardes",
+    "backup_now": "Sauvegarder maintenant",
+    "backup_done": "Sauvegarde créée.",
+    "backup_failed": "Échec de la sauvegarde.",
+    "api_keys": "Clés d'API"
+  },
+  "topbar": {
+    "collapse": "Masquer la sidebar",
+    "expand": "Afficher la sidebar"
+  },
+  "theme": {
+    "system": "Système",
+    "light": "Clair",
+    "dark": "Sombre"
+  },
+  "nav": {
+    "label": "Navigation",
+    "all": "Tous les fichiers",
+    "untagged": "Non taggés",
+    "recent": "Récemment taggés",
+    "recent_files": "Fichiers récents",
+    "views": "Vues",
+    "tags": "Tags",
+    "virtual_folders": "Dossiers virtuels"
+  },
+  "footer": {
+    "version": "Version"
+  },
+  "files": {
+    "column": {
+      "name": "Nom",
+      "tags": "Tags",
+      "size": "Taille",
+      "date": "Date",
+      "resize": "Redimensionner la colonne",
+      "resize_hint": "Glisser pour redimensionner, double-clic pour réinitialiser"
+    },
+    "loading": "Chargement des fichiers",
+    "empty": "Aucun fichier ne correspond.",
+    "bulk": {
+      "updated": "fichiers mis à jour",
+      "failed": "en échec",
+      "deleted": "fichiers supprimés",
+      "none": "Aucun fichier sélectionné"
+    },
+    "actions": "Actions sur les fichiers",
+    "rename": "Renommer",
+    "delete": "Supprimer",
+    "rename_single": "Sélectionnez un fichier à renommer",
+    "delete_error": "Échec de la suppression",
+    "rename_done": "Fichier renommé",
+    "rename_failed": "Échec du renommage"
+  },
+  "color": {
+    "neutral": "Neutre",
+    "red": "Rouge",
+    "orange": "Orange",
+    "amber": "Ambre",
+    "green": "Vert",
+    "teal": "Sarcelle",
+    "cyan": "Cyan",
+    "blue": "Bleu",
+    "indigo": "Indigo",
+    "violet": "Violet",
+    "pink": "Rose",
+    "brown": "Brun"
+  },
+  "tags": {
+    "create_tag": "Créer un tag",
+    "create_group": "Créer un groupe",
+    "new_group": "Nouveau groupe",
+    "new_tag": "Nouveau tag",
+    "column": {
+      "name": "Nom",
+      "color": "Couleur"
+    },
+    "rename": "Renommer",
+    "delete": "Supprimer",
+    "delete_confirm": "Supprimer ce tag ? Il sera retiré de tous les fichiers.",
+    "delete_group_confirm": "Supprimer ce groupe et ses tags ? Les fichiers perdront ces tags.",
+    "change_color": "Changer la couleur",
+    "actions": "Actions du tag",
+    "group_actions": "Actions du groupe",
+    "group_exists": "Ce nom de groupe existe déjà.",
+    "tag_exists": "Ce nom de tag existe déjà.",
+    "group_name_required": "Entrez un nom de groupe.",
+    "tag_name_required": "Entrez un nom de tag.",
+    "name_invalid": "Nom invalide."
+  },
+  "views": {
+    "new": "Nouvelle vue",
+    "new_group": "Nouveau groupe de vues",
+    "color": "Couleur",
+    "create_group": "Créer un groupe de vues",
+    "group_actions": "Actions du groupe de vues",
+    "group_exists": "Ce nom de groupe de vues existe déjà.",
+    "delete_group_confirm": "Supprimer ce groupe de vues et ses vues ?",
+    "name": "Nom",
+    "sort": "Tri",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "delete_confirm": "Supprimer cette vue ?",
+    "duplicate": "Dupliquer",
+    "edit": "Modifier",
+    "rename": "Renommer",
+    "actions": "Actions",
+    "sort_fields": {
+      "id": "Id",
+      "name": "Nom",
+      "size": "Taille",
+      "date": "Date"
+    },
+    "dir": {
+      "asc": "croissant",
+      "desc": "décroissant"
+    },
+    "builder": {
+      "filters": "Filtres",
+      "where": "Où",
+      "group": "Groupe",
+      "and": "Et",
+      "or": "Ou",
+      "add_condition": "Ajouter un filtre",
+      "add_group": "Ajouter un groupe",
+      "add_tag": "Ajouter un tag",
+      "tagset": "Jeu exact de tags",
+      "empty": "Sans filtre, tous les fichiers sont listés.",
+      "tag": "Tag",
+      "cmp": "Opérateur",
+      "remove": "Retirer",
+      "has": "contient les tags",
+      "has_not": "ne contient pas les tags",
+      "only": "contient seulement les tags",
+      "not_only": "ne contient pas seulement les tags"
+    }
+  },
+  "error": {
+    "title": "Erreur",
+    "internal": "Erreur interne du serveur"
+  },
+  "setup": {
+    "title": "Bienvenue dans fs-ez",
+    "intro": "Créez le compte utilisateur pour commencer.",
+    "username": "Identifiant",
+    "password": "Mot de passe",
+    "submit": "Créer le compte",
+    "username_invalid": "Saisissez un identifiant de 1 à 64 caractères.",
+    "password_invalid": "Utilisez un mot de passe d'au moins 12 caractères.",
+    "exists": "Un compte utilisateur existe déjà.",
+    "too_many": "Trop de tentatives, réessayez plus tard."
+  },
+  "login": {
+    "title": "Connexion",
+    "username": "Identifiant",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "error": "Identifiants invalides"
+  },
+  "logout": "Déconnexion",
+  "colors": {
+    "amber": "Ambre",
+    "green": "Vert",
+    "blue": "Bleu"
+  },
+  "inbox": {
+    "rescan": "Analyser l'inbox",
+    "rescan_started": "Analyse de l'inbox lancée.",
+    "rescan_running": "Analyse de l'inbox déjà en cours."
+  },
+  "errors": {
+    "conflict": "Nom déjà utilisé."
+  },
+  "tokens": {
+    "name": "Nom",
+    "name_placeholder": "ex. ci deploy",
+    "expires": "Expiration facultative",
+    "create": "Créer la clé",
+    "created": "Nouvelle clé d'API créée",
+    "created_hint": "Copiez-la maintenant, elle ne sera plus affichée.",
+    "copy": "Copier",
+    "copied": "Copié",
+    "never": "Jamais",
+    "no_expiry": "Sans expiration",
+    "column": {
+      "name": "Nom",
+      "created": "Créée",
+      "last_used": "Dernière utilisation",
+      "expires": "Expiration",
+      "actions": "Actions"
+    },
+    "revoke": "Révoquer",
+    "revoke_confirm": "Révoquer cette clé ? Les clients qui l'utilisent perdront l'accès.",
+    "name_invalid": "Nom de clé invalide, 1 à 100 caractères imprimables.",
+    "expires_invalid": "Date future au format jj-mm-aaaa.",
+    "exists": "Ce nom de clé existe déjà.",
+    "not_found": "Cette clé d'API n'existe plus."
+  },
+  "toast": {
+    "error": "Une erreur est survenue"
+  },
+  "virtual_folders": {
+    "new": "Nouveau dossier",
+    "name": "Nom du dossier",
+    "create": "Créer",
+    "rename": "Renommer",
+    "delete": "Supprimer",
+    "drop_hint": "Déposez un fichier ou un dossier ici pour le déplacer.",
+    "move": "Déplacer",
+    "move_here": "Déplacer ici",
+    "move_cancel": "Annuler le déplacement",
+    "parent": "Dossier parent"
+  }
+}
